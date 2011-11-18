@@ -1,0 +1,17 @@
+---
+layout: guide
+title: Search API - Version
+cat: guide
+sidebar: reference_api_search
+---
+
+p. Returns a version for each search hit.
+
+<pre class="prettyprint lang-js">
+{
+    "version": true,
+    "query" : {
+        "term" : { "user" : "kimchy" }
+    }
+}
+</pre>

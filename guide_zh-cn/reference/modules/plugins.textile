@@ -1,0 +1,36 @@
+---
+layout: guide
+title: Plugins
+cat: guide
+sidebar: reference_modules
+---
+
+h1. Plugins
+
+p. Plugins are a way to enhance the basic elasticsearch functionality in a custom manner. They range from adding custom mapping types, custom analyzers (in a more built in fashion), native scripts, custom discovery and more.
+
+h2. Installing plugins
+
+p. Installing plugins can either be done manually by placing them under the @plugins@ directory, or using the @plugin@ script. Formal "built in" plugins can be installed simply by running the command with the name of the plugin, for example:
+
+<pre class="prettyprint">
+bin/plugin -install cloud-aws
+</pre>
+
+p. Plugins can also be automatically downloaded and installed from gitub using: @user_name/repo_name@ structure, or, for explicit versions, using @user_name/repo_name/version_number@. When no version number is specified, first a version based on the elasticsearch version is tried, and if it does not work, then master is used.
+
+h2. Site Plugins
+
+p. Plugins can have "sites" in them, any plugin that exists under the @plugins@ directory with a @_site@ directory, its content will be statically served when hitting @/_plugin/[plugin_name]/@ url. Those can be added even after the process has started.
+
+p. Installed plugins that do not contain any java related content, will automatically be detected as site plugins, and their content will be moved under @_site@.
+
+p. The ability to install plugins from github allows to easily install site plugins hosted there, for example, running:
+
+<pre class="prettyprint">
+bin/plugin -install mobz/elasticsearch-head
+bin/plugin -install lukas-vlcek/bigdesk
+</pre>
+
+p. Will install both of those site plugins, with @elasticsearch-head@ available under @http://localhost:9200/_plugin/head/@ and @bigdesk@ available under @http://localhost:9200/_plugin/bigdesk/@.
+

@@ -1,0 +1,36 @@
+---
+layout: guide
+title: Search API - Indices And Types
+cat: guide
+sidebar: reference_api_search
+---
+
+p. The search API can be applied to multiple types within an index, and across multiple indices. For example, we can search on all documents across all types within the twitter index:
+
+<pre class="prettyprint">
+$ curl -XGET 'http://localhost:9200/twitter/_search?q=user:kimchy'
+</pre>
+
+p. We can also search within specific types:
+
+<pre class="prettyprint">
+$ curl -XGET 'http://localhost:9200/twitter/tweet,user/_search?q=user:kimchy'
+</pre>
+
+p. We can also search all tweets with a certain tag across several indices (for example, when each user has his own index):
+
+<pre class="prettyprint">
+$ curl -XGET 'http://localhost:9200/kimchy,elasticsearch/tweet/_search?q=tag:wow'
+</pre>
+
+p. Or we can search all tweets across all available indices using @_all@ placeholder:
+
+<pre class="prettyprint">
+$ curl - XGET 'http://localhost:9200/_all/tweet/_search?q=tag:wow'
+</pre>
+
+p. Or even search across all indices and all types:
+
+<pre class="prettyprint">
+$ curl -XGET 'http://localhost:9200/_search?q=tag:wow'
+</pre>

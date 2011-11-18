@@ -1,0 +1,18 @@
+---
+layout: guide
+title: Match All Filter
+cat: guide
+sidebar: reference_query_dsl
+---
+
+p. A filter that matches on all documents:
+
+<pre class="prettyprint lang-js">
+{
+    "constant_score" : {
+        "filter" : {
+            "match_all" : { }
+        }
+    }
+}
+</pre>

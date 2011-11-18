@@ -1,0 +1,22 @@
+---
+layout: guide
+title: Count Groovy API
+cat: guide
+sidebar: reference_groovy_api
+---
+
+p. The count API is very similar to the "Java count API":/guide/reference/java-api/count.html. The Groovy extension allows to provide the query to execute as a @Closure@ (similar to GORM criteria builder):
+
+<pre class="prettyprint">
+def count = client.count {
+    indices "test"
+    types "type1"
+    query {
+        term {
+            test = "value"
+        }
+    }
+}
+</pre>
+
+p. The query follows the same "Query DSL":/guide/reference/query-dsl.

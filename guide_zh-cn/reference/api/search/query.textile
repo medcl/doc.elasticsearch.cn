@@ -1,0 +1,17 @@
+---
+layout: guide
+title: Search API - Query
+cat: guide
+sidebar: reference_api_search
+---
+
+p. The query element within the search request body allows to define a query using the "Query DSL":/guide/reference/query-dsl.
+
+<pre class="prettyprint lang-js">
+{
+    "query" : {
+        "term" : { "user" : "kimchy" }
+    }
+}
+</pre>
+

@@ -1,0 +1,45 @@
+---
+layout: guide
+title: memcached
+cat: guide
+sidebar: reference_modules
+---
+
+p. The memcached module allows to expose *elasticsearch* "API":/guide/reference/api over the memcached protocol (as closely as possible). 
+
+p. It is provided as a plugin called @transport-memcached@ and installing is as simply as executing @plugin -install transport-memcached@ or downloading the memcached plugin and placing it under the @plugins@ directory.
+
+p. The memcached protocol supports both the binary and the text protocol, automatically detecting the correct one to use.
+
+h1. Mapping REST to Memcached Protocol
+
+p. Memcached commands are mapped to REST and handled by the same generic REST layer in elasticsearch. Here is a list of the memcached commands supported:
+
+h2. GET
+
+p. The memcached @GET@ command maps to a REST @GET@. The key used is the URI (with parameters). The main downside is the fact that the memcached @GET@ does not allow body in the request (and @SET@ does not allow to return a result...). For this reason, most REST APIs (like search) allow to accept the "source" as a URI parameter as well.
+
+h2. SET
+
+p. The memcached @SET@ command maps to a REST @POST@. The key used is the URI (with parameters), and the body maps to the REST body.
+
+h2. DELETE
+
+p. The memcached @DELETE@ command maps to a REST @DELETE@. The key used is the URI (with parameters).
+
+h2. QUIT
+
+p. The memcached @QUIT@ command is supported and disconnects the client.
+
+h1. Settings
+
+p. The following are the settings the can be configured for memcached:
+
+|_. Setting |_. Description |
+|@memcached.port@|A bind port range. Defaults to @11211-11311@.|
+
+p. It also shares the uses the common "network settings":network.html.
+
+h1. Disable memcached
+
+p. The memcached module can be completely disabled and not started using by setting @memcached.enabled@ to @false@. By default it is enabled once it is detected as a plugin.

@@ -1,0 +1,34 @@
+---
+layout: guide
+title: Compound Word Token Filter
+cat: guide
+sidebar: reference_index_modules_analysis
+---
+
+p. Token filters that allow to decompose compound words. There are two types available: @dictionary_decompounder@ and @hyphenation_decompounder@.
+
+p. The following are settings that can be set for a compound word token filter type:
+
+|_. Setting |_. Description |
+|@word_list@|A list of words to use.|
+|@word_list_path@|A path (either relative to @config@ location, or absolute) to a list of words.|
+
+
+p. Here is an example:
+
+<pre class="prettyprint">
+index :
+    analysis :
+        analyzer :·
+            myAnalyzer2 :
+                type : custom
+                tokenizer : standard
+                filter : [myTokenFilter1, myTokenFilter2]
+        filter :
+            myTokenFilter1 :
+                type : dictionary_decompounder
+                word_list: [one, two, three]
+            myTokenFilter2 :
+                type : hyphenation_decompounder
+                word_list_path: path/to/words.txt
+</pre>

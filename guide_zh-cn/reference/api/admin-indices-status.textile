@@ -1,0 +1,24 @@
+---
+layout: guide
+title: Status API
+cat: guide
+sidebar: reference_api
+---
+
+p. The indices status API allows to get a comprehensive status information of one or more indices.
+
+<pre class="prettyprint">
+curl -XGET 'http://localhost:9200/twitter/_status'
+</pre>
+
+p. In order to see the recovery status of shards, pass @recovery@ flag and set it to @true@. For snapshot status, pass the @snapshot@ flag and set it to @true@.
+
+h1. Multi Index
+
+p. The status API can be applied to more than one index with a single call, or even on @_all@ the indices.
+
+<pre class="prettyprint">
+curl -XGET 'http://localhost:9200/kimchy,elasticsearch/_status'
+
+curl -XGET 'http://localhost:9200/_status'
+</pre>

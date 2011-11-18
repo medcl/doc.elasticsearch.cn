@@ -1,0 +1,21 @@
+---
+layout: guide
+title: Limit Filter
+cat: guide
+sidebar: reference_query_dsl
+---
+
+p. A limit filter limits the number of documents (per shard) to execute on. For example:
+
+<pre class="prettyprint lang-js">
+{
+    "filtered" : {
+        "filter" : {
+             "limit" : {"value" : 100}
+         },
+         "query" : {
+            "term" : { "name.first" : "shay" }
+        }
+    }
+}
+</pre>

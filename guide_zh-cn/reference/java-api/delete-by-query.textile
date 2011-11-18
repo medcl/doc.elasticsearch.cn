@@ -1,0 +1,21 @@
+---
+layout: guide
+title: Delete By Query Java API
+cat: guide
+sidebar: reference_java_api
+---
+
+p. The delete by query API allows to delete documents from one or more indices and one or more types based on a query. The query can either be provided the "Query DSL":../query_dsl. Here is an example:
+
+
+<pre class="prettyprint lang-java">
+import static org.elasticsearch.index.query.xcontent.FilterBuilders.*;
+import static org.elasticsearch.index.query.xcontent.QueryBuilders.*;
+
+DeleteByQueryResponse response = client.prepareDeleteByQuery("test")
+        .setQuery(termQuery("_type", "type1"))
+        .execute()
+        .actionGet();
+</pre>
+
+p. For more information on the delete by query operation, check out the "delete_by_query API":/guide/reference/api/delete-by-query.html docs.

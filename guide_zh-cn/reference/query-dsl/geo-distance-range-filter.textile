@@ -1,0 +1,30 @@
+---
+layout: guide
+title: Geo Distance Range Filter
+cat: guide
+sidebar: reference_query_dsl
+---
+
+p. Filters documents that exists within a range from a specific point:
+
+<pre class="prettyprint lang-js">
+{
+    "filtered" : {
+        "query" : {
+            "match_all" : {}
+        },
+        "filter" : {
+            "geo_distance_range" : {
+                "from" : "200km",
+                "to" : "400km"
+                "pin.location" : {
+                    "lat" : 40,
+                    "lon" : -70
+                }
+            }
+        }
+    }
+}
+</pre>
+
+p. Supports the same point location parameter as the @geo_distance@ filter. And also support the common parameters for range (lt, lte, gt, gte, from, to, include_upper and include_lower).

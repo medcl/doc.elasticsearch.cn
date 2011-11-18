@@ -1,0 +1,13 @@
+---
+layout: guide
+title: UAX Email URL Tokenizer
+cat: guide
+sidebar: reference_index_modules_analysis
+---
+
+p. A tokenizer of type @uax_url_email@ which works exactly like the @standard@ tokenizer, but also handles emails and urls.
+
+p. The following are settings that can be set for a @uax_url_email@ tokenizer type:
+
+|_. Setting |_. Description |
+|@max_token_length@|The maximum token length. If a token is seen that exceeds this length then it is discarded. Defaults to @255@.|

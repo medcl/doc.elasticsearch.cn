@@ -1,0 +1,8 @@
+---
+layout: guide
+title: Setup
+cat: guide
+sidebar: reference_setup
+---
+
+p. This section includes information on how to setup *elasticsearch* and get it running. If you haven't already, "download":/download it, and then check the "installation":installation.html docs.

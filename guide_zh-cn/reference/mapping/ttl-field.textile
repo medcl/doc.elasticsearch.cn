@@ -1,0 +1,48 @@
+---
+layout: guide
+title: TTL Field
+cat: guide
+sidebar: reference_mapping
+---
+
+p. A lot of documents naturally come with an expiration date. Documents can therefore have a @_ttl@ (time to live), which will cause the expired documents to be deleted automatically.
+
+h1. enabled
+
+p. By default it is disabled, in order to enable it, the following mapping should be defined:
+
+<pre class="prettyprint lang-js">
+{
+    "tweet" : {
+        "_ttl" : { "enabled" : true }
+    }
+}
+</pre>
+
+h1. store / index
+
+p. By default the @_ttl@ field has @store@ set to @yes@ and @index@ set to @not_analyzed@. Note that @index@ property has to be set to @not_analyzed@ in order for the purge process to work.
+
+h1. default
+
+p. You can provide a per index/type default @_ttl@ value as follows:
+
+<pre class="prettyprint lang-js">
+{
+    "tweet" : {
+        "_ttl" : { "enabled" : true, "default" : "1d" }
+    }
+}
+</pre>
+
+p. In this case, if you don't provide a @_ttl@ value in your query or in the @_source@ all tweets will have a @_ttl@ of one day.
+
+p. If no @default@ is set and no @_ttl@ value is given then the document has an infinite @_ttl@ and will not expire.
+
+h1. Note on documents expiration
+
+p. Expired documents will be automatically deleted regularly. You can dynamically set the @indices.ttl.interval@ to fit your needs. The default value is @60s@.
+
+p. The deletion orders are processed by bulk. You can set @indices.ttl.bulk_size@ to fit your needs. The default value is @10000@.
+
+p. Note that the expiration procedure handle versioning properly so if a document is updated between the collection of documents to expire and the delete order, the document won't be deleted.

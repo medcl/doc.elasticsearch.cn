@@ -1,0 +1,22 @@
+---
+layout: guide
+title: Refresh API
+cat: guide
+sidebar: reference_api
+---
+
+p. The refresh API allows to explicitly refresh one or more index, making all operations performed since the last refresh available for search. The (near) real-time capabilities depends on the index engine used. For example, the robin one requires refresh to be called, but by default a refresh is scheduled periodically.
+
+<pre class="prettyprint">
+$ curl -XPOST 'http://localhost:9200/twitter/_refresh'
+</pre>
+
+h2. Multi Index
+
+p. The refresh API can be applied to more than one index with a single call, or even on @_all@ the indices.
+
+<pre class="prettyprint">
+$ curl -XPOST 'http://localhost:9200/kimchy,elasticsearch/_refresh'
+
+$ curl -XPOST 'http://localhost:9200/_refresh'
+</pre>

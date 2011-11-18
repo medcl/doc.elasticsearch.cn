@@ -1,0 +1,27 @@
+---
+layout: guide
+title: Path Hierarchy Tokenizer
+cat: guide
+sidebar: reference_index_modules_analysis
+---
+
+p. The @path_hierarchy@ tokenizer takes something like this:
+
+<pre>
+/something/something/else
+</pre>
+
+p. And produces tokens:
+
+<pre>
+/something
+/something/something
+/something/something/else
+</pre>
+
+|_. Setting |_. Description |
+|@delimiter@|The character delimiter to use, defaults to @/@.|
+|@replacement@|An optional replacement character to use. Defaults to the @delimiter@.|
+|@buffer_size@|The buffer size to use, defaults to @1024@.|
+|@reverse@|Generates tokens in reverse order, defaults to @false@.|
+|@skip@|Controls initial tokens to skip, defaults to @0@.|
