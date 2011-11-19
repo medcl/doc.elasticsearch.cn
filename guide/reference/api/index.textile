@@ -52,4 +52,5 @@ p. 所有 REST APIs 允许接受一个参数 @case@ . 当该参数设置为 @cam
 h2. JSONP
 
 p. 所有 REST APIs 接受一个 @callback@ 参数来生成 "JSONP":http://en.wikipedia.org/wiki/JSONP 输出.
+
 p. 你也可以使用参数 @source@ 作为query_string（补充：即GET方式）来代替POST请求对应的body部分.
