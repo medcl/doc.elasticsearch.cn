@@ -1,15 +1,16 @@
 ---
 layout: guide
 title: API
-cat: guide
-sidebar: reference_api
+cat: 向导
+cat_link: guide
+sidebar: 帮助文档_api
 ---
 
-p. This section describes the REST APIs *elasticsearch* provides (mainly) using JSON. The API is exposed using "HTTP":/guide/reference/modules/http.html, "thrift":/guide/reference/modules/thrift.html, "memcached":/guide/reference/modules/memcached.html.
+p. 这部分描述 *elasticsearch* 提供的 REST API接口，使用数据格式主要是Json.  API 接口通过以下方式暴露 "HTTP":/guide/reference/modules/http.html , "thrift":/guide/reference/modules/thrift.html, "memcached":/guide/reference/modules/memcached.html.
 
-h1. Nodes
+h1. 节点
 
-p. Most cluster level APIs allow to specify which nodes to execute on (for example, getting the node stats for a node). Nodes can be identified in the APIs either using their internal node id, the node name, address, custom attributes, or just the @_local@ node receiving the request. For example, here are some sample executions of nodes info:
+p. 大部分集群级别的API接口都允许通过指定在特定的节点上执行， (如，获取某个节点的状态). 节点可以通过其内部id, 节点名, 节点ip地址, 自定义属性, 或只是通过 @_local@ node 来定位并接受请求. 例如, 这里是一个获取节点信息的操作:
 
 <pre class="prettyprint">
 # Local    
@@ -26,29 +27,29 @@ curl localhost:9200/_cluster/nodes/ra*:2
 curl localhost:9200/_cluster/nodes/ra*:2*
 </pre>
 
-h1. Options
+h1. 选项
 
-h2. Pretty Results
+h2. 输出结果格式化
 
-p. When appending @?pretty=true@ to any request made, the JSON returned will be pretty formatted (use it for debugging only!).
+p. 当给任意request类型的请求附加参数 @?pretty=true@ 后, 输出的JSON结果会是格式化好的（拥有良好缩进的JSON，主要是用于调试方便）.
 
-h2. Parameters
+h2. 参数
 
-p. Rest parameters (when using HTTP, map to HTTP URL parameters) follow the convention of using underscore casing.
+p. Rest 参数 (如果使用 HTTP 协议, 隐射为 HTTP 的URL parameters参数) 约定都使用下划线来标示.
 
-h2. Boolean Values
+h2. 布尔值
 
-p. All REST APIs parameters (both request parameters and JSON body) support providing boolean "false" as the values: @false@, @0@ and @off@. All other values are considered "true". Note, this is not related to fields within a document indexed treated as boolean fields.
+p. 所有的 REST APIs 的参数 (包括请求参数和body) 布尔值 "false" 等同于: @false@, @0@ 和 @off@. 所有的其他值都被认为是 "true". 注意, 这并不是索引文档里判断某个字段是否为布尔字段的标准.
 
-h2. Number Values
+h2. 数值
 
-p. All REST APIs support providing numbered parameters as @string@ on top of supporting the native JSON number types.
+p. 所有的 REST APIs 都支持JSON原生的数字类型，并且允许将数值当作 @string@ 来处理.
 
-h2. Result Casing
+h2. 结果大小写
 
-p. All REST APIs accept the @case@ parameter. When set to @camelCase@, all field names in the result will be returned in camel casing, otherwise, underscore casing will be used. Note, this does not apply to the source document indexed.
+p. 所有 REST APIs 允许接受一个参数 @case@ . 当该参数设置为 @camelCase@, 所有返回字段的名称都会以驼峰式大小写风格（camel casing）, 否则, 默认使用下划线. 注意, 这里并不会索引文档里面的字段（只是影响自带字段如:_id,_index等）.
 
 h2. JSONP
 
-p. All REST APIs accept a @callback@ parameter resulting in a "JSONP":http://en.wikipedia.org/wiki/JSONP result.
-p. You can also use the @source@ query string parameter to substitute for the body of the request.
+p. 所有 REST APIs 接受一个 @callback@ 参数来产生名为 "JSONP":http://en.wikipedia.org/wiki/JSONP 的结果.
+p. 你也可以使用 @source@ 作为query_string（补充：即GET方式）的参数来代替POST请求的body部分.
