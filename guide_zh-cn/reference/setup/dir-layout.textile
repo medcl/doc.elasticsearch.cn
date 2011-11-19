@@ -1,27 +1,27 @@
 ---
 layout: guide
-title: Directory Layout
-cat: guide
-sidebar: reference_setup
+title: 目录结构
+cat: 向导
+sidebar: 帮助文档_安装
 ---
 
-p. The directory layout of an installation is as follows:
+p. 安装包文件的目录结构大致如下:
 
-|_. Type |_. Description |_. Default Location |_. Setting |
-|*home*|Home of elasticsearch installation||@path.home@|
-|*bin*|Binary scripts including @elasticsearch@ to start a node|@{path.home}/bin@||
-|*conf*|Configuration files including @elasticsearch.yml@|@{path.home}/config@|@path.conf@|
-|*data*|The location of the data files of each index / shard allocated on the node. Can hold multiple locations.|@{path.home}/data@|@path.data@|
-|*work*|Temporal files that are used by different nodes.|@{path.home}/work@|@path.work@|
-|*logs*|Log files location|@{path.home}/logs@|@path.logs@|
+|_. 类型 |_. 描述 |_. 默认路径 |_. 设置 |
+|*home*|elasticsearch根目录||@path.home@|
+|*bin*|可执行脚本文件，包括 @elasticsearch@ 用来启动一个节点|@{path.home}/bin@||
+|*conf*|配置文件，包括 @elasticsearch.yml@|@{path.home}/config@|@path.conf@|
+|*data*|节点上每个索引\碎片的数据文件的存储路径. 可以是包含多个路径.|@{path.home}/data@|@path.data@|
+|*work*|临时文件可以被多个节点使用.|@{path.home}/work@|@path.work@|
+|*logs*|日志文件路径|@{path.home}/logs@|@path.logs@|
 
-p. The multiple data locations allows to stripe it. The striping is simple, placing whole files in one of the locations, and deciding where to place the file based on the location with greatest free space. Note, there is no multiple copies of the same data, in that, its similar to RAID 0. Though simple, it should provide a good solution for people that don't want to mess with raids and the like. Here is how it is configured:
+p. 多个文件路径允许stripe. 拆分（striping）很简单 , 将所有文件放在一个地方, 然后判断哪个地方有更多的剩余空间，文件就放在那个地方. 注意, 相同的数据不会存在多份, 类似于 RAID 0. 尽管简单，但是依然为会那些嫌raid麻烦却有想要有类似这种方式的提供一个很好的解决方案. 下面是配置的样例:
 
 <pre>
 path.data: /mnt/first,/mnt/second
 </pre>
 
-Or the in an array format:
+或者通过如下数组的方式:
 
 <pre>
 path.data: ["/mnt/first", "/mnt/second"]
