@@ -5,7 +5,7 @@ cat: 向导
 sidebar: 帮助文档_安装
 ---
 
-p. 从这里 "下载":/download 最新的版本并解压, 转到刚解压的目录， 通过如下命令来启动*elasticsearch*:
+p. 从 "这里":/download 下载最新的版本并解压, 转到刚解压的目录， 通过如下命令来启动 *elasticsearch*:
 
 <pre class="prettyprint lang-sh">
 $ bin/elasticsearch
@@ -17,7 +17,7 @@ $ bin/elasticsearch
 $ bin/elasticsearch -f
 </pre>
 
-ElasticSearch 使用java编写, 所以你需要安装"Java":http://java.sun.com/javase/downloads/index.jsp 环境来运行. 并且确保设置好环境变量 @JAVA_HOME@ .
+ElasticSearch 使用java编写, 所以你需要安装 "Java 6":http://java.sun.com/javase/downloads/index.jsp  环境来运行. 并且确保设置好环境变量 @JAVA_HOME@ .
 
 h1. 环境变量
 
@@ -29,7 +29,7 @@ p. 环境变量： @ES_MIN_MEM@ 和 @ES_MAX_MEM@ 表示设置JVM分配的最小�
 
 h2. *NIX
 
-p. 启动shell脚本包含很多特性. 第一个, 最开始就说过了的, 能够很方便的控制elasticsearch服务到底是以前台还是后台的方式来运行.
+p. 启动shell脚本包含很多特性. 首先, 前面已经说过了, 能够很方便的控制elasticsearch服务究竟是以前台还是后台的方式来运行.
 
 p. 另外一个特性就是能够传递参数 @-X@ 和 @-D@ 直接到脚本里面. 外面传递的参数会直接覆盖脚本里面的 @JAVA_OPTS@ 和 @ES_JAVA_OPTS@ 的变量值. 例如:
 
@@ -41,9 +41,9 @@ h1. 重要配置项
 
 h2. 文件描述
 
-p. 确保机器扩大了最大文件打开数（或者是运行elasticsearch服务的用户的文件打开数）. 强烈建议设置成32k 甚至是 64k .
+p. 确保机器调大系统的 “最大打开文件数”（或者是运行elasticsearch服务的用户的最大文件打开数）. 强烈建议设置成32k 甚至是 64k .
 
-p. 为了测试进程能够打开多少文件，可以通过传递参数 @-Des.max-open-files@ 并设置值为 @true@. 这样服务会在启动的时候打印进程能够打开的文件数目.
+p. 为了测试进程能够打开多少文件，可以通过传递参数 @-Des.max-open-files@ 并设置值为 @true@. 这样服务会在启动的时候打印输出进程能够打开的文件数目.
 
 h2. 内存设置
 
@@ -64,8 +64,8 @@ p. ElasticSearch 可以通过目录下 @bin/service@ 的脚本 @elasticsearch@ �
 |@install@|安装elasticsearch到系统启动项 (init.d / service).|
 |@remove@|从系统启动项里面移除elasticsearch (init.d / service).|
 
-p. 服务使用的是Java Service Wrapper，一个很小的围绕java虚拟机的本地包装并且监视着虚拟机的各种状态.
+p. 服务使用的是Java Service Wrapper，一个精简的java虚拟机本地包装并且可以监视着虚拟机的各种状态.
 
 p. 注意, 传递给JVM级别的参数配置 (如 -X 参数) 应该在配置文件 @elasticsearch.conf@ 里进行设置. 
 
-p. 环境变量 @ES_MIN_MEM@ 和 @ES_MAX_MEM@ 用来设置JVM内存分配的参数 (单位 mega bytes). 分别是 @256@ 和 @1024@ .
+p. 环境变量 @ES_MIN_MEM@ 和 @ES_MAX_MEM@ 用来设置JVM内存分配的参数 (单位 mega bytes). 默认分别是 @256@ 和 @1024@ .

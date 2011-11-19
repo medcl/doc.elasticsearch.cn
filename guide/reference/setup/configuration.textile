@@ -16,7 +16,7 @@ network :
     host : 10.0.0.4
 </pre>
 
-在生产环境中, 你肯定需要修改存储数据和日志文件的路径:
+在生产环境中, 你肯定需要修改数据存储和日志文件的路径:
 
 <pre class="prettyprint">
 path:
@@ -24,14 +24,14 @@ path:
   data: /var/data/elasticsearch
 </pre>
 
-另外, 不要忘记给你的线上环境起一个集群名称, elasticsearch使用它来发现和自动添加其它节点:
+另外, 不要忘记给你的线上集群起一个名称, elasticsearch将使用它来自动发现和添加其它节点:
 
 <pre class="prettyprint">
 cluster:
   name: <NAME OF YOUR CLUSTER>
 </pre>
 
-在内部, 所有配置都会合并折叠为“基于命名空间的（namespaced）"的配置. 例如, 上面的配置会合并为 @network.host@. 这意味着elasticsearch可以支持其它格式的配置方式, 如, "JSON":http://www.json.org. 如果你比较钟爱json, 只要简单的将配置文件 @elasticsearch.yml@ 重命名为 @elasticsearch.json@ 并且内容改成:
+在ES内部, 所有配置都会合并折叠为“基于命名空间的（namespaced）"的配置. 例如, 上面的配置会合并为 @network.host@. 这意味着elasticsearch可以灵活的支持其它格式的配置方式, 如, "JSON":http://www.json.org. 如果你比较钟爱json, 只要简单的将配置文件 @elasticsearch.yml@ 重命名为 @elasticsearch.json@ 并且内容改成:
 
 <pre class="prettyprint">
 {
@@ -41,7 +41,7 @@ cluster:
 }
 </pre>
 
-p. 同时这也意味着可以很方便的通过外部参数传递的方式来提供这些设置，如 参数 @ES_JAVA_OPTS@ 或是作为 @elasticsearch@ 命令的参数, 如:
+p. 同时这也意味着可以很方便的通过外部参数传递的方式来提供这些设置，如 参数 @ES_JAVA_OPTS@ 同样也可作为 @elasticsearch@ 命令的参数, 如:
 
 <pre class="prettyprint">
 $ elasticsearch -f -Des.network.host=10.0.0.4
