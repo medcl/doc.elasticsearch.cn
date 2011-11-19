@@ -3,7 +3,11 @@
         <span>elasticsearch.</span>
     </a>
     {% if page.cat %}
-        <a id="section" href="/{{ page.cat }}" title="elasticsearch {{ page.cat }}">
+        {% if page.cat_link %}
+			<a id="section" href="/{{ page.cat_link }}" title="elasticsearch {{ page.cat }}">
+		{% else %}
+			<a id="section" href="/{{ page.cat_link }}" title="elasticsearch {{ page.cat }}">
+		{% endif %}		
             {{ page.cat }}
         </a>
     {% endif %}

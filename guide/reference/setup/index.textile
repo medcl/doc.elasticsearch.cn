@@ -1,7 +1,8 @@
 ---
 layout: guide
 title: 安装
-cat: guide
+cat: 向导
+cat_link: guide
 sidebar: 帮助文档_安装
 ---
 
