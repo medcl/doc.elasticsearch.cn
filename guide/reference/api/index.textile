@@ -10,7 +10,7 @@ p. 这部分描述 *elasticsearch* 提供的 REST API接口，使用数据格式
 
 h1. 节点
 
-p. 大部分集群级别的API接口都允许通过指定在特定的节点上执行， (如，获取某个节点的状态). 节点可以通过其内部id, 节点名, 节点ip地址, 自定义属性, 或只是通过 @_local@ node 来定位并接受请求. 例如, 这里是一个获取节点信息的操作:
+p. 大部分集群级别的API接口都允许在指定的节点上执行， (如获取某个节点的状态). 节点可以通过其内部id, 节点名, 节点ip地址, 自定义属性, 或只是通过 @_local@ （本地节点）来定位并接受请求. 例如, 这里是一个获取节点信息的操作:
 
 <pre class="prettyprint">
 # Local    
@@ -31,7 +31,7 @@ h1. 选项
 
 h2. 输出结果格式化
 
-p. 当给任意request类型的请求附加参数 @?pretty=true@ 后, 输出的JSON结果会是格式化好的（拥有良好缩进的JSON，主要是用于调试方便）.
+p. 当给任意request类型的请求附加参数 @?pretty=true@ 后, 输出的JSON结果会是预先格式化好的（拥有良好缩进的JSON，主要是用于调试方便）.
 
 h2. 参数
 
@@ -47,9 +47,9 @@ p. 所有的 REST APIs 都支持JSON原生的数字类型，并且允许将数�
 
 h2. 结果大小写
 
-p. 所有 REST APIs 允许接受一个参数 @case@ . 当该参数设置为 @camelCase@, 所有返回字段的名称都会以驼峰式大小写风格（camel casing）, 否则, 默认使用下划线. 注意, 这里并不会索引文档里面的字段（只是影响自带字段如:_id,_index等）.
+p. 所有 REST APIs 允许接受一个参数 @case@ . 当该参数设置为 @camelCase@, 所有返回字段的名称都会以驼峰式大小写风格（camel casing）, 否则, 默认使用下划线. 注意, 这里并不会影响索引文档里面的字段（只是影响自带字段如: _id, _index等）.
 
 h2. JSONP
 
-p. 所有 REST APIs 接受一个 @callback@ 参数来产生名为 "JSONP":http://en.wikipedia.org/wiki/JSONP 的结果.
-p. 你也可以使用 @source@ 作为query_string（补充：即GET方式）的参数来代替POST请求的body部分.
+p. 所有 REST APIs 接受一个 @callback@ 参数来生成 "JSONP":http://en.wikipedia.org/wiki/JSONP 输出.
+p. 你也可以使用参数 @source@ 作为query_string（补充：即GET方式）来代替POST请求对应的body部分.
