@@ -1,8 +1,8 @@
 ---
 layout: guide
-title: Setup
-cat: guide
-sidebar: reference_setup
+title: 安装
+cat: 向导
+sidebar: 帮助文档_安装
 ---
 
-p. This section includes information on how to setup *elasticsearch* and get it running. If you haven't already, "download":/download it, and then check the "installation":installation.html docs.
+p. 这部分内容主要指导怎样安装并运行 *elasticsearch* . 如果你已经从 "下载":/download 下载了的话, 那就直接查看 "安装":installation.html 部分吧.
