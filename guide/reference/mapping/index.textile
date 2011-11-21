@@ -1,24 +1,25 @@
 ---
 layout: guide
 title: Mapping
-cat: guide
-sidebar: reference_mapping
+cat: 向导
+cat_link: guide
+sidebar: 帮助文档_Mapping映射
 ---
 
-p. Mapping is the process of defining how a document should be mapped to the Search Engine, including its searchable characteristics such as which fields are searchable and if/how they are tokenized. In ElasticSearch, an index may store documents of different "mapping types". ElasticSearch allows one to associate multiple mapping definitions for each mapping type.
+p. Mapping 是一个定义搜索引擎将如何处理一个索引文档的过程，包括定义字段是否可被搜索，采用何种分词切分方式. 在 ElasticSearch 里, 一个索引允许存在不同文档映射类型（mapping types,以后简称类型）的文档. ElasticSearch 能够对每个类型分别进行定义.
 
-p. Explicit mapping is defined on an index/type level. By default, there isn't a need to define an explicit mapping, since one is automatically created and registered when a new type or new field is introduced (with no performance overhead) and have sensible defaults. Only when the defaults need to be overridden must a mapping definition be provided.
+p. 类型mapping设置可以显式的定义在索引或者类型级别. 默认情况下，你甚至不需要显式的定义mapping类型, 因为当一个新的类型（或一个新的字段）创建并在索引里注册的时候，ES会自动的赋予合适的初始值（并且在性能上不会有什么影响）. 只有当你需要重新定义（即覆盖ES默认设置）这些mapping设置的时候你才需要自定义mapping类型.
 
-h2. Mapping Types
+h2. Mapping 类型
 
-p. Mapping types are a way to try and divide the documents indexed into the same index into logical groups. Think of it as tables in a database. Though there is separation between types, its not a full separation (all end up as a document within the same Lucene index).
+p. Mapping 类型是一种试图将同一索引中的各种文档进行分离并逻辑分组的方法. 你可以将它想象为数据库里面的表. 尽管类型之间是独立的, 但是它们并不是物理上的完全隔离，其实它们还是同一个Lucene索引里面.
 
-p. Field names with the same name across types are highly recommended to have the same type and same mapping characteristics (analysis settings for example). There is an effort to allow to explicitly "choose" which field to use by using type prefix (@my_type.my_field@), but its not complete, and there are places where it will never work (like faceting on the field).
+p. 不同类型下如果存在相同的字段名称，强烈建议它们（同名字段）使用相同的数据类型和mapping参数（如分析（分词）设置等）. 可以显式的通过前缀来指明是你想要的是那个类型下的字段，如 (@my_type.my_field@), 但这种方式在有些地方就不一定好使,如对字段进行层面（或方面、分组）查询的时候 (like faceting on the field).
 
-p. In practice though, this restriction is almost never an issue. The field name usually ends up being a good indication to its "typeness" (e.g. "first_name" will always be a string). Note also, that this does not apply to the cross index case.
+p. 尽管在实践中，这个限制并没有什么问题. 从字段的名称也能体现出其类型(e.g. "first_name" 肯定是string类型). 注意, 这并不适用于跨索引的情况.
 
 h2. Mapping API
 
-p. To create a mapping, you will need the "Put Mapping API":/guide/reference/api/admin-indices-put-mapping.html, or you can add multiple mappings when you "create an index":/guide/reference/api/admin-indices-create-index.html.
+p. 如果要创建一个 mapping, 你可以查看 "Put Mapping API":/guide/reference/api/admin-indices-put-mapping.html, 当你 "创建索引":/guide/reference/api/admin-indices-create-index.html 的时候，你还可以添加多重类型（multiple mappings）.
 
 
