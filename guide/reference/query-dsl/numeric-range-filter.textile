@@ -1,8 +1,9 @@
 ---
 layout: guide
 title: Numeric Range Filter
-cat: guide
-sidebar: reference_query_dsl
+cat: 向导
+cat_link: guide
+sidebar: 帮助文档_query_dsl
 ---
 
 p. Filters documents with fields that have values within a certain numeric range. Similar to range filter, except that it works only with numeric values, and the filter execution works differently.

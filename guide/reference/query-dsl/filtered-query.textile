@@ -1,11 +1,12 @@
 ---
 layout: guide
 title: Filtered Query
-cat: guide
-sidebar: reference_query_dsl
+cat: 向导
+cat_link: guide
+sidebar: 帮助文档_query_dsl
 ---
 
-p. A query that applies a filter to the results of another query. This query maps to Lucene @FilteredQuery@.
+p. 对应于Lucene里面的 @FilteredQuery@ ，可以在一个查询的结果上应用一个过滤操作.
 
 <pre class="prettyprint lang-js">
 {
@@ -22,4 +23,4 @@ p. A query that applies a filter to the results of another query. This query map
 }
 </pre>
 
-p. The filter object can hold only filter elements, not queries. Filters can be much faster compared to queries since they don't perform any scoring, especially when they are cached.
+p. 该DSL里面的 filter 对象只能使用 filter 元素, 而不能是query类型. 过滤（Filters） 要比查询快很多，因为和查询相比它们不需要执行打分过程, 尤其是当设置缓存过滤结果之后.
