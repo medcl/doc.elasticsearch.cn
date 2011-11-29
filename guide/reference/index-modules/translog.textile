@@ -1,14 +1,15 @@
 ---
 layout: guide
-title: Translog
-cat: guide
-sidebar: reference_index_modules
+title: 事务日志Translog
+cat: 向导
+cat_link: guide
+sidebar: 帮助文档_索引模块
 ---
 
-p. Each shard has a transaction log or write ahead log associated with it. It allows to guarantee that when an index/delete operation occurs, it is applied atomically, while not "committing" the internal lucene index for each request. A flush ("commit") still happens based on several parameters:
+p. 每个碎片都有一个事务日志文件，事务日志文件主要是为了保证索引写和删除过程的可靠性，你不需要显示的去提交每个请求（对应于lucene的commit），这一切都是自动的，你也可以显式的执行flush操作来进行请求的提交，还可以使用下面这些参数来进行控制:
 
-|_. Setting |_. Description |
-|index.translog.flush_threshold_ops|After how many operations to flush. Defaults to @5000@.|
-|index.translog.flush_threshold_size|Once the translog hits this size, a flush will happen. Defaults to @500mb@.|
-|index.translog.flush_threshold_period|The period with no flush happening to force a flush. Defaults to @60m@.|
+|_. 配置 |_. 说明 |
+|index.translog.flush_threshold_ops| 设置当累计操作达到多少时就执行flush操作，默认值 @5000@.|
+|index.translog.flush_threshold_size| 一旦你的事务日志文件的大小（translog）达到设置的这个值，则开始执行flush操作，默认值 @500mb@.|
+|index.translog.flush_threshold_period| 每隔多长时间执行一次flush，默认 @60m@.|
 
