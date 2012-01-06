@@ -1,11 +1,12 @@
 ---
 layout: guide
 title: Search API - Highlighting
-cat: guide
-sidebar: reference_api_search
+cat: 向导
+cat_link: guide
+sidebar: 帮助文档_api_search
 ---
 
-p. Allow to highlight search results on one or more fields. The implementation uses the either lucene @fast-vector-highlighter@ or @highlighter@. The search request body:
+p. 实现对搜索结果的一个或者多个字段进行高亮. 使用Lucene的 @fast-vector-highlighter@ 或者 @highlighter@ 来实现. 搜索请求的Body如下:
 
 <pre class="prettyprint lang-js">
 {
@@ -18,13 +19,30 @@ p. Allow to highlight search results on one or more fields. The implementation u
 }
 </pre>
 
-p. In the above case, the @content@ field will be highlighted for each search hit (there will be another element in each search hit, called @highlight@, which includes the highlighted fields and the highlighted fragments).
+p. 如上所示, 每个搜索结果里面的 @content@ 字段都将会被高亮处理(同时，在每个搜索结果里面，会多出来额外的一个字段 @highlight@, 里面包含了高亮的字段和高亮之后的文本片段) 如下:
 
-p. In order to perform highlighting, the actual content of the field is required. If the field in question is stored (has @store@ set to @yes@ in the mapping), it will be used, otherwise, the actual @_source@ will be loaded and the relevant field will be extracted from it.
+<pre class="prettyprint lang-js">
+{
+    "_index": "index",
+    "_type": "fulltext",
+    "_id": "3",
+    "_score": 0.61370564,
+    "_source": {
+        "content": "中韩渔警冲突调查：韩警平均每天扣1艘中国渔船"
+    },
+    "highlight": {
+        "content": [
+            "均每天扣1艘<tag1>中国</tag1>渔船 "
+        ]
+    }
+}
+</pre>
 
-p. If no @term_vector@ information is provided (by setting it to @with_positions_offsets@ in the mapping), then the plain highlighter will be used. If it is provided, then the fast vector highlighter will be used. When term vectors are available, highlighting will be performed faster at the cost of bigger index size.
+p. 为了执行高亮操作，字段是实际内容是必须要有的. 如果字段设置为存储 (mapping里面设置 @store@ 为 @yes@ ), 高亮的时候就会优先使用这个, 否则, 要加载 @_source@ 里面的数据，并抽取相关的字段内容.
 
-p. Here is an example of setting the @content@ field to allow for highlighting on it (this will cause the index to be bigger):
+p. 如果没有提供 @term_vector@ 信息(mapping字段定义，term_vector设置为 @with_positions_offsets@ ), 则高亮的时候使用的是最朴素的高亮器. 这意味着，如果你保存了单词向量信息,高亮操作的时候速度会更快. 因为你存储了单词的位置和偏移信息，这些在高亮的时候可以直接使用，同时需要注意的是这些额外的信息也会增加索引的体积.
+
+p. 下面是一个简单的例子,设置 @content@ 字段用来做高亮 (索引会增大):
 
 <pre class="prettyprint lang-js">
 {
@@ -35,9 +53,9 @@ p. Here is an example of setting the @content@ field to allow for highlighting o
 </pre>
 
 
-h1. Highlighting Tags
+h1. 高亮标记
 
-p. By default, the highlighting will wrap highlighted text in @<em>@ and @</em>@. This can be controlled by setting @pre_tags@ and @post_tags@, for example:
+p. 默认情况下, 高亮器会在高亮的文本两边包裹 @<em>@ 和 @</em>@ 标签. 你可以通过设置 @pre_tags@ 和 @post_tags@ 来进行自定义, 例如:
 
 <pre class="prettyprint lang-js">
 {
@@ -52,7 +70,7 @@ p. By default, the highlighting will wrap highlighted text in @<em>@ and @</em>@
 }
 </pre>
 
-p. There can be a single tag or more, and the "importance" is ordered. There are also built in "tag" schemas, with currently a single schema called @styled@ with @pre_tags@ of:
+p. 你可以设置一个或者多个标签，并且按优先级排序. There are also built in "tag" schemas, with currently a single schema called @styled@ with @pre_tags@ of:
 
 <pre class="prettyprint">
 <em class="hlt1">, <em class="hlt2">, <em class="hlt3">,

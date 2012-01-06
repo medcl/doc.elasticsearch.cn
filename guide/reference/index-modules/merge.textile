@@ -1,21 +1,22 @@
 ---
 layout: guide
-title: Merge
-cat: guide
-sidebar: reference_index_modules
+title: 合并 Merge
+cat: 向导
+cat_link: guide
+sidebar: 帮助文档_索引模块
 ---
 
-p. A shard in elasticsearch is a Lucene index, and a lucene index is broken down into segments. Segments are internal storage elements in the index where the index data is stored, and are immutable up to delete markers. Segments are, periodically, merged into larger segments to keep the index size at bay and expunge deletes.
+p. elasticsearch里面的一个碎片即lucene的一个索引，而lucene的索引又分解为段（segment），段是lucene索引里存储索引数据的存储单元，在你打上删除的标记之前它都是不变的，段会周期的合并到一个大的段文件中，这样控制索引文件大小和文件数量，并彻底删除之前标记为“delete”的索引.
 
-p. The more segments one has in the Lucene index mean slower searches and more memory used, but, low number of segments means more merging that has to go on.
+p. lucene索引里面，段越多意味着搜索的时候速度会越慢，并且耗费的内存越多，同时段越少也意味着需要更多的段合并操作.
 
-h1. Policy
+h1. 策略 Policy
 
-p. The index merge policy module allows one to control which segments of a shard index are to be merged. There are several types of policies with the default set to @tiered@.
+p. 索引合并策略模块允许你对要进行合并的索引碎片的某个段进行控制，有如下策略类型，默认是  @tiered@.
 
 h2. tiered
 
-p. Merges segments of approximately equal size, subject to an allowed number of segments per tier. This is similar to @log_bytes_size@ merge policy, except this merge policy is able to merge non-adjacent segment, and separates how many segments are merged at once from how many segments are allowed per tier. This merge policy also does not over-merge (ie, cascade merges).
+p. 段合并大致等于大小，和 @log_bytes_size@ 差不多， Merges segments of approximately equal size, subject to an allowed number of segments per tier. This is similar to @log_bytes_size@ merge policy, except this merge policy is able to merge non-adjacent segment, and separates how many segments are merged at once from how many segments are allowed per tier. This merge policy also does not over-merge (ie, cascade merges).
 
 p. This policy has the following settings:
 

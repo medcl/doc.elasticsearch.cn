@@ -1,7 +1,0 @@
----
-layout: guide
-title: Modules
-cat: guide
-sidebar: reference_modules
----
-

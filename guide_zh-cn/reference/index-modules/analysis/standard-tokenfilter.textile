@@ -1,8 +1,0 @@
----
-layout: guide
-title: Standard Token Filter
-cat: guide
-sidebar: reference_index_modules_analysis
----
-
-p. A token filter of type @standard@ that normalizes tokens extracted with the "Standard Tokenizer":standard-tokenizer.html.
