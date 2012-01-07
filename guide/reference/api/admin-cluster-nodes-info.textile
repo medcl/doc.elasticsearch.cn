@@ -1,11 +1,11 @@
 ---
 layout: guide
-title: Nodes Info API
+title: 节点信息 API
 cat: guide
 sidebar: reference_api
 ---
 
-p. The cluster nodes info API allows to retrieve one or more (or all) of the cluster nodes information.
+p. 利用集群节点信息API可以获取单个或多个（甚至全部）集群节点的信息
 
 <pre class="prettyprint">
 $ curl -XGET 'http://localhost:9200/_cluster/nodes'
@@ -13,4 +13,4 @@ $ curl -XGET 'http://localhost:9200/_cluster/nodes'
 $ curl -XGET 'http://localhost:9200/_cluster/nodes/nodeId1,nodeId2'
 </pre>
 
-p. The first command retrieves information of all the nodes in the cluster. The second command selectively retrieves nodes information of only @nodeId1@ and @nodeId2@. All the nodes selective options are explained "here":index.html.
+p. 第一个命令获取集群中所有节点的信息。第二个仅选择了@nodeId1@ 和 @nodeId2@. 节点选择选项请参照 "这里":index.html.
