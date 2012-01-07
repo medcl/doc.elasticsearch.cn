@@ -43,7 +43,7 @@ p. 该 API 请求接受如下参数:
 
 |_. 参数名 |_. 说明 |
 |level|可选值为 @cluster@, @indices@ 或 @shards@. 指定返回的健康状态的详细程度. 默认为 @cluster@.|
-|wait_for_status| @green@, @yellow@ 或 @red@之一. 在集群健康状态变为指定状态 (直到超出 timeout 时限) 之前一直等待. 默认不等待任何状态.|
+|wait_for_status| @green@, @yellow@ 或 @red@ 之一. 在集群健康状态变为指定状态 (直到超出 timeout 时限) 之前一直等待. 默认不等待任何状态.|
 |wait_for_relocating_shards|设定等待的区块迁移数量. 通常为 @0@ ，表明等待所有区块迁移完成. 默认不等待.|
 |wait_for_nodes|请求等到可访问节点数达到 @N@. 该参数的取值还可以是 @>=N@, @<=N@, @>N@ 和 @<N@. 或者, 也可以用 @ge(N)@, @le(N)@, @gt(N)@ 和 @lt(N)@.|
 |timeout|配合 wait_for_XXX 参数指定等待时长. 默认 @30s@.|
