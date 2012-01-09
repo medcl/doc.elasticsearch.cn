@@ -1,29 +1,29 @@
 ---
 layout: guide
-title: Nodes Shutdown API
+title: 关闭节点 API
 cat: guide
 sidebar: reference_api
 ---
 
-p. The nodes shutdown API allows to shutdown one or more (or all) nodes in the cluster. Here is an example of shutting the @_local@ node the request is directed to:
+p. 可以用这个 API 关闭集群中的一个或多个（甚至全部）节点。下面的命令关闭了 @_local@ 节点:
 
 <pre class="prettyprint">
 $ curl -XPOST 'http://localhost:9200/_cluster/nodes/_local/_shutdown'
 </pre>
 
-p. Specific node(s) can be shutdown as well using their respective node ids (or other selective options as explained "here":index.html.):
+p. 也可以用节点id发起关闭指令 (或者 "这里":index.html 提到的节点选择方法):
 
 <pre class="prettyprint">
 $ curl -XPOST 'http://localhost:9200/_cluster/nodes/nodeId1,nodeId2/_shutdown'
 </pre>
 
-p. The master (of the cluster) can also be shutdown using:
+p. 集群的主节点可以这样关闭:
 
 <pre class="prettyprint">
 $ curl -XPOST 'http://localhost:9200/_cluster/nodes/_master/_shutdown'
 </pre>
 
-p. Finally, all nodes can be shutdown using one of the options below:
+p. 关闭所有节点可以用如下指令:
 
 <pre class="prettyprint">
 $ curl -XPOST 'http://localhost:9200/_shutdown'
@@ -33,9 +33,9 @@ $ curl -XPOST 'http://localhost:9200/_cluster/nodes/_shutdown'
 $ curl -XPOST 'http://localhost:9200/_cluster/nodes/_all/_shutdown'
 </pre>
 
-h1. Delay
+h1. 延迟
 
-p. By default, the shutdown will be executed after a 1 seconds delay (@1s@). The delay can be customized by setting the @delay@ parameter in a time value format. For example:
+p. 默认情况下，关闭动作将在收到指令 (@1s@) 秒后执行. 可以用 @delay@ 参数设定延迟的时长. 比如:
 
 <pre class="prettyprint">
 $ curl -XPOST 'http://localhost:9200/_cluster/nodes/_local/_shutdown?delay=10s'
