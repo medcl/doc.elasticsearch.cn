@@ -1,11 +1,12 @@
 ---
 layout: guide
-title: Bulk API
-cat: guide
-sidebar: reference_api
+title: Bulk批量接口
+cat: 向导
+cat_link: guide
+sidebar: 帮助文档_api接口
 ---
 
-p. The bulk API makes it possible to perform many index/delete operations in a single API call. This can greatly increase the indexing speed. The REST API endpoint is @/_bulk@, and it expects the following JSON structure:
+p. 批量接口允许你一次执行多个 index/delete 操作. 通过批量接口可以大大提高索引的速度. 对应的 REST 接口为： @/_bulk@, 接受如下格式的参数:
 
 <pre class="prettyprint">
 action_and_meta_data\n
@@ -17,9 +18,9 @@ action_and_meta_data\n
 optional_source\n
 </pre>
 
-p. *NOTE*: the final line of data must end with a newline character @\n@.
+p. *注意*: 最后一行数据必须要以换行符结尾 @\n@.
 
-p. Because this format uses literal @\n@'s as delimiters, please be sure that the JSON actions and sources are not pretty printed. Here is an example of a correct sequence of bulk commands:
+p. 因为数据格式里面使用的是字符 @\n@'s 作为分隔符, 所以必须保证JSON格式的操作和JSON格式的source文档数据必须是没有多余的换行符的，所以格式化显示的JSON是不行的（no pretty printed json）. 下面是bulk正确格式的例子:
 
 <pre class="prettyprint">
 { "index" : { "_index" : "test", "_type" : "type1", "_id" : "1" } }
@@ -29,48 +30,48 @@ p. Because this format uses literal @\n@'s as delimiters, please be sure that th
 { "field1" : "value3" }
 </pre>
 
-p. The endpoints are @/_bulk@, @/{index}/_bulk@, and @{index}/type/_bulk@. When the index or the index/type are provided, they will be used by default on bulk items that don't provide them explicitly.
+p. REST 操作接口为 @/_bulk@, @/{index}/_bulk@, 和 @{index}/type/_bulk@. 当索引名(index)或者索引加类型(index/type)被指定的时候, 在bulk的每条操作中，如果没有显式的指定索引或者类型，则会使用它们作为默认值.
 
-p. A note on the format. The idea here is to make processing of this as fast as possible. As some of the actions will be redirected to other shards on other nodes, only @action_meta_data@ is parsed on the receiving node side.
+p. 关于这个数据格式，这个接口的目的的为了让操作能够更快的执行，所以如果有actions需要跳转到其他节点上的shard碎片上执行，则只会将 @action_meta_data@ 发送过去.
 
-p. Client libraries using this protocol should try and strive to do something similar on the client side, and reduce buffering as much as possible.
+p. 客户端使用批量接口的时候，同样需要注意上面的这些事项，并且尽可能去除不需要的内容，减少传输的负担.
 
-p. The response to a bulk action is a large JSON structure with the individual results of each action that was performed. The failure of a single action does not affect the remaining actions.
+p. bulk操作的返回结果是一个大的JSON格式数据，里面包含了每一个操作的执行结果（成功与否），单个操作的执行失败不会影响其它剩下的操作.
 
-p. There is no "correct" number of actions to perform in a single bulk call. You should experiment with different settings to find the optimum size for your particular workload.
+p. 关于单次批量接口能够提交多少操作，这里没有标准答案，最好的办法是在你的实际的工作环境做一些测试.
 
-p. If using the HTTP API, make sure that the client does not send HTTP chunks, as this will slow things down.
+p. 如果你使用的是HTTP接口，确保你的client没有发送HTTP chunks，因为它会影响速度.
 
-h1. Versioning
+h1. 关于版本（Versioning）
 
-p. Each bulk item can include the version value using the @_version@/@version@ field. It automatically follows the behavior of the index / delete operation based on the @_version@ mapping. It also support the @version_type@ when using @external@ versioning.
+p. 每个批量操作的条目都可以添加一个版本字段 @_version@/@version@ . 执行index / delete 操作的时候，它会自动的参照mapping里面定义的关于 @_version@ 的行为. 如果使用的是 @external@  版本方式，同样可以接受参数 @version_type@ .
 
-h1. Routing
+h1. 路由（Routing）
 
-p. Each bulk item can include the routing value using the @_routing@/@routing@ field. It automatically follows the behavior of the index / delete operation based on the @_routing@ mapping.
+p. 每个批量操作同样也可以字段 @_routing@/@routing@ 设置routing值. 在执行 index /delete 操作的时候，也会自动使用该参数，并执行在mapping @_routing@  里面定义的行为.
 
 h1. Percolator
 
-p. Each bulk index action can include a percolate value using the @_percolate@ field.
+p. 批量接口的每一个索引操作还可以接受字段 @_percolate@ 来指定 percolate 值.
 
 h1. Parent
 
-p. Each bulk item can include the parent value using the @_parent@/@parent@ field. It automatically follows the behavior of the index / delete operation based on the @_parent@ / @_routing@ mapping.
+p. 如果是parent-chid类型的索引类型，同样也可以通过指定字段 @_parent@/@parent@ . 其它的同上，参照 @_parent@ / @_routing@ mapping定义.
 
 h1. Timestamp
 
-p. Each bulk item can include the timestamp value using the @_timestamp@/@timestamp@ field. It automatically follows the behavior of the index operation based on the @_timestamp@ mapping.
+p. 通过字段 @_timestamp@/@timestamp@ 为每一个索引对象指定一个时间戳. 同上，参照 @_timestamp@ mapping定义.
 
 h1. TTL
 
-p. Each bulk item can include the ttl value using the @_ttl@/@ttl@ field. It automatically follows the behavior of the index operation based on the @_ttl@ mapping.
+p. 通过字段 @_ttl@/@ttl@ 同样可以定义TTL参数. 参照 @_ttl@ mapping定义.
 
 h1. Write Consistency
 
-p. When making bulk calls, you can require a minimum number of active shards in the partition through the @consistency@ parameter. The values allowed are @one@, @quorum@, and @all@. It defaults to the node level setting of @action.write_consistency@, which in turn defaults to @quorum@.
+p. 当调用批量接口的时候，你可以通过参数 @consistency@ 指定一个操作必须至少在几个active shard上执行成功才算是操作成功，接受的参数可以是： @one@, @quorum@, and @all@ ,默认采用节点上的配置 @action.write_consistency@, 其默认值为 @quorum@. （注：cassandra也有这样的机制，one表示一个成功就ok，quorum表示大多数，all表示所有，一致性强度依次递增）
 
-p. For example, in a N shards with 2 replicas index, there will have to be at least 2 active shards within the relevant partition (@quorum@) for the operation to succeed. In a N shards with 1 replica scenario, there will need to be a single shard active (in this case, @one@ and @quorum@ is the same).
+p. 举例说明, 在一个 N shards 和 2 replicas 的索引中, 至少需要保证2个 active shards 的操作都执行成功 (@quorum@) . 在 N shards 和 1 replica 的场景中, 只需要保证在一个 active shard 上操作执行成功就可以正确返回(这个场景中, @one@ 和 @quorum@ 的情况都是一样的).
 
 h1. Refresh
 
-p. The @refresh@ parameter can be set to @true@ in order to refresh the relevant shards immediately after the bulk operation has occurred and make it searchable, instead of waiting for the normal refresh interval to expire. Setting it to @true@ can trigger additional load, and may slow down indexing.
+p. 带上 @refresh@ 参数并设置为 @true@ 可以让批量操作相关的shard立即刷新，这样就可以保证这些操作的结果可以立即被搜索到, 而不是去等待默认的刷新时间过期. 但是设置为 @true@ 会触发额外的开销，并且可能减慢索引的速度，这点需要注意一下.
