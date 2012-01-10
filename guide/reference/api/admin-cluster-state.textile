@@ -1,28 +1,28 @@
 ---
 layout: guide
-title: Cluster State API
+title: 集群状态 API
 cat: guide
 sidebar: reference_api
 ---
 
-p. The cluster state API allows to get a comprehensive state information of the whole cluster.
+p. 通过这个 API 可以得到集群的全面状态信息.
 
 <pre class="prettyprint">
 $ curl -XGET 'http://localhost:9200/_cluster/state'
 </pre>
 
-h1. Response Filters
+h1. 响应过滤
 
-p. It is possible to filter the cluster state response using the following REST parameters:
+p. 集群状态响应可以用如下的REST参数过滤:
 
-|_. Parameter |_. Description |
-|filter_nodes| Set to @true@ to filter out the @nodes@ part of the response. |
-|filter_routing_table| Set to @true@ to filter out the @routing_table@ part of the response.  |
-|filter_metadata| Set to @true@ to filter out the @metadata@ part of the response. |
-|filter_blocks| Set to @true@ to filter out the @blocks@ part of the response. |
-|filter_indices| When not filtering metadata, a comma separated list of indices to include in the response. |
+|_. 参数 |_. 请求 |
+|filter_nodes| 为 @true@ 时将过滤掉响应信息的 @nodes@ 部分. |
+|filter_routing_table| 为 @true@ 时将过滤掉响应信息的 @routing_table@ 部分.  |
+|filter_metadata| 为 @true@ 时将过滤掉响应信息的 @metadata@ 部分. |
+|filter_blocks| 为 @true@ 时将过滤掉响应信息的 @blocks@ 部分. |
+|filter_indices| 当不过滤元数据时, 在响应中包括用逗号分割的索引列表. |
 
-p. Example follows:
+p. 请尝试下面的例子:
 
 <pre class="prettyprint">
 $ curl -XGET 'http://localhost:9200/_cluster/state?filter_nodes=true'
