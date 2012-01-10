@@ -5,7 +5,7 @@ cat: guide
 sidebar: reference_query_dsl
 ---
 
-p. A family of @text@ queries that accept text, analyzes it, and constructs a query out of it. For example:
+p. @text@ 类型的查询, 可以用于处理各种文本. 例如:
 
 <pre class="prettyprint lang-js">
 {
@@ -15,21 +15,21 @@ p. A family of @text@ queries that accept text, analyzes it, and constructs a qu
 }
 </pre>
 
-p. Note, even though the name is text, it also supports exact matching (@term@ like) on numeric values and dates.
+p. 注意, 虽然他的名字叫text, 但可以用它来精确匹配 (类似于 @term@) 数字和日期.
 
-p. Note, @message@ is the name of a field, you can subsitute the name of any field (including @_all@) instead.
+p. 其中, @message@ 是字段的名称, 你可以用你实际使用的字段名来替换 (包括 @_all@).
 
-h2. Types of Text Queries
+h2. Text Queries的类型
 
 h3. boolean
 
-p. The default @text@ query is of type @boolean@. It means that the text provided is analyzed and the analysis process constructs a boolean query from the provided text. The @operator@ flag can be set to @or@ or @and@ to control the boolean clauses (defaults to @or@).
+p. 默认的 @text@ 查询是 @boolean@ 型的. 意思就是说提供的文本会被分析构建为一个布尔型查询.  @operator@ 标志可以使用 @or@ 或者 @and@ 来组合布尔子句 (默认为 @or@).
 
-p. The @analyzer@ can be set to control which analyzer will perform the analysis process on the text. It default to the field explicit mapping definition, or the default search analyzer.
+p. @analyzer@ 用于设定在分析过程中哪一个分析器会用于处理这段文本. 它会使用mapping中定义的分析器, 如果没有定义则会使用索引的默认分析器.
 
 p. @fuzziness@ can be set to a value (depending on the relevant type, for string types it should be a value between @0.0@ and @1.0@) to constructs fuzzy queries for each term analyzed. The @prefix_length@ and @max_expansions@ can be set in this case to control the fuzzy process.
 
-p. Here is an example when providing additional parameters (note the slight change in structure, @message@ is the field name):
+p. 下面这个例子使用了额外的参数 (注意例子中的结构变化, @message@ 是字段的名称):
 
 <pre class="prettyprint lang-js">
 {
@@ -45,7 +45,7 @@ p. Here is an example when providing additional parameters (note the slight chan
 
 h3. phrase
 
-p. The @text_phrase@ query analyzes the text and creates a @phrase@ query out of the analyzed text. For example:
+p. @text_phrase@ 查询会分析文本并且创建一个 @phrase@ 查询. 例如:
 
 <pre class="prettyprint lang-js">
 {
@@ -55,7 +55,7 @@ p. The @text_phrase@ query analyzes the text and creates a @phrase@ query out of
 }
 </pre>
 
-p. Since @text_phrase@ is only a @type@ of a @text@ query, it can also be used in the following manner:
+p. 既然 @text_phrase@ 只是 @text@ 查询的一个 @种类@ , 你也可以使用下面的方式:
 
 <pre class="prettyprint lang-js">
 {
