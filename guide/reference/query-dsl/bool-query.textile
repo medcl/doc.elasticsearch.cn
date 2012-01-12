@@ -5,14 +5,14 @@ cat: guide
 sidebar: reference_query_dsl
 ---
 
-p. A query that matches documents matching boolean combinations of other queries. The bool query maps to Lucene @BooleanQuery@. It is built using one or more boolean clauses, each clause with a typed occurrence. The occurrence types are:
+p. 一个由其他类型查询组合而成的文档匹配查询, 对应Lucene的 @BooleanQuery@. 它可以由一个或者多个查询语句构成, 每种语句都有它们的匹配条件. 可能的匹配条件如下:
 
 |_. Occur |_. Description |
-| @must@ | The clause (query) must appear in matching documents. |
-| @should@ | The clause (query) should appear in the matching document. A boolean query with no @must@ clauses, one or more @should@ clauses must match a document. The minimum number of should clauses to match can be set using @minimum_number_should_match@ parameter. |
-| @must_not@ | The clause (query) must not appear in the matching documents. Note that it is not possible to search on documents that only consists of a @must_not@ clauses. |
+| @must@ | 匹配的文档必须满足该查询语句. |
+| @should@ | 匹配的文档可以满足该查询语句. 如果一个布尔查询(Bool Query)不包含 @must@ 查询语句, 那么匹配的文档必须满足其中一个或多个 @should@ 查询语句, 可以使用 @minimum_number_should_match@ 参数来设定最低满足的数量. |
+| @must_not@ | 匹配的文档必须不满足该查询语句. 注意, 不能只用一个 @must_not@ 查询语句来搜索文档. |
 
-p. The bool query also supports @disable_coord@ parameter (defaults to @false@).
+p. 布尔查询(Bool Query)也支持 @disable_coord@ 参数 (默认为 @false@).
 
 <pre class="prettyprint lang-js">
 {
