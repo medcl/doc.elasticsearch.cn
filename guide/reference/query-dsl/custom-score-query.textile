@@ -5,7 +5,7 @@ cat: guide
 sidebar: reference_query_dsl
 ---
 
-p. @custom_score@ query allows to wrap another query and customize the scoring of it optionally with a computation derived from other field values in the doc (numeric ones) using "script expression":/guide/reference/modules/scripting.html. Here is a simple sample:
+p. @custom_score@ 查询可以包含其他种类的查询并且自定义评分标准, 可以使用 "脚本表达式":/guide/reference/modules/scripting.html 来根据文档查询结果中(数值型)的值计算评分, 下面是一个简单的例子:
 
 <pre class="prettyprint lang-js">
 "custom_score" : {
@@ -16,11 +16,11 @@ p. @custom_score@ query allows to wrap another query and customize the scoring o
 }
 </pre>
 
-p. On top of the different scripting field values and expression, the @_score@ script parameter can be used to retrieve the score based on the wrapped query.
+p. 除了使用文档结果字段和脚本表达式外, 还可以使用 @_score@ 参数来获取其所含查询的评分.
 
-h1. Script Parameters
+h1. 脚本参数
 
-p. Scripts are cached for faster execution. If the script has parameters that it needs to take into account, it is preferable to use the same script, and provide parameters to it:
+p. 脚本会被缓存下来用以加快执行速度. 如果脚本中有参数需要代入使用的话, 推荐的方法是使用同一个脚本，然后传入参数:
 
 <pre class="prettyprint lang-js">
 "custom_score" : {
