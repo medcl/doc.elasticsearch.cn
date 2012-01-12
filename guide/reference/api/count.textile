@@ -1,11 +1,12 @@
 ---
 layout: guide
 title: Count API
-cat: guide
-sidebar: reference_api
+cat: 向导
+cat_link: guide
+sidebar: 帮助文档_api
 ---
 
-p. The count API allows to easily execute a query and get the number of matches for that query. It can be executed across one or more indices and across one or more types. The query can either be provided using a simple query string as a parameter, or using the "Query DSL":/guide/reference/query-dsl defined within the request body. Here is an example:
+p. count API 能够很轻松的获取查询结果的总数. 支持一个或多个索引，或者一个或多个索引类型. 可以通过简单的URL参数的方式，或者使用"Query DSL":/guide/reference/query-dsl ，下面是示例:
 
 <pre class="prettyprint">
 $ curl -XGET 'http://localhost:9200/twitter/tweet/_count?q=user:kimchy'
@@ -16,7 +17,7 @@ $ curl -XGET 'http://localhost:9200/twitter/tweet/_count' -d '
 }'
 </pre>
 
-p. Both examples above do the same thing, which is count the number of tweets from the twitter index for a certain user. The result is:
+p. 上面两种写法是完全等效的，得到的结果如下所示:
 
 <pre class="prettyprint lang-js">
 {
@@ -29,54 +30,54 @@ p. Both examples above do the same thing, which is count the number of tweets fr
 }
 </pre>
 
-p. The query is optional, and when not provided, it will use @match_all@ to count all the docs.
+p. 查询条件是可选的，如果没有指定，则默认执行 @match_all@ 即统计所有文档的总数.
 
-h1. Multiple Indices and Types
+h1. 多个索引及类型
 
-p. The count API can be applied to multiple types within an index, and across multiple indices. For example, we can count all documents across all types that match a @user@ field with value @kimchy@:
+p. count接口可以指定一个索引里面的多个类型，或者是多个索引. 比如, 我们可以查询所有类型下符合条件为： @user@ 字段的值为 @kimchy@ 的文档:
 
 <pre class="prettyprint">
 $ curl -XGET 'http://localhost:9200/_count?q=user:kimchy'
 </pre>
 
-p. We can also count within specific types:
+p. 或者在指定类型下进行查询:
 
 <pre class="prettyprint">
 $ curl -XGET 'http://localhost:9200/twitter/tweet,user/_count?q=user:kimchy'
 </pre>
 
-p. We can also count all tweets with a certain tag across several indices (for example, when each user has his own index):
+p. 另外我们还可以跨索引，指定多个索引来进行查询:
 
 <pre class="prettyprint">
 $ curl -XGET 'http://localhost:9200/kimchy,elasticsearch/_count?q=tag:wow'
 </pre>
 
-p. Or even count across all indices:
+p. 或者是查询所有索引:
 
 <pre class="prettyprint">
 $ curl -XGET 'http://localhost:9200/_count?q=tag:wow'
 </pre>
 
-h1. Request Parameters
+h1. 请求参数
 
-p. When executing count using the query parameter @q@, the query passed is a query string using Lucene query parser. There are additional parameters that can be passed:
+p. 当通过url参数执行count查询的时候，通过参数 @q@ 构造查询条件, 接受的条件是一个Lucene格式的querstring. 另外还有一些额外的查询参数可以指定:
 
-|_. Name |_. Description |
-|df| The default field to use when no field prefix is defined within the query. |
-|analyzer| The analyzer name to be used when analyzing the query string. |
-|default_operator| The default operator to be used, can be @AND@ or @OR@. Defaults to @OR@. |
+|_. 名称 |_. 描述 |
+|df| 当查询条件没有指定字段前缀的时候，默认使用的字段. |
+|analyzer| 指定分析器来处理query string. |
+|default_operator| 指定查询条件间默认的操作符（operator），可以为 @AND@ 或者 @OR@. 默认为 @OR@. |
 
 h1. Request Body
 
-p. The count can use the "Query DSL":/guide/reference/query-dsl within its body in order to express the query that should be executed. The body content can also be passed as a REST parameter named @source@.
+p. count查询还能够通过 "Query DSL":/guide/reference/query-dsl 的方式来执行，请求的body内容也可以通过以REST参数 @source@ 的方式传递.
 
-p(note). Both HTTP GET and HTTP POST can be used to execute count with body. Since not all clients support GET with body, POST is allowed as well.
+p(注). HTTP GET 和 HTTP POST 这两种方式的请求都可以用body方式传递参数来执行count查询. 因为不是所有的客户端都支持使用GET的方式的同时支持Body参数,而POST就是支持的.
 
-h1. Distributed
+h1. 分布式
 
-p. The count operation is broadcast across all shards. For each shard id group, a replica is chosen and executed against it. This means that replicas increase the scalability of count.
+p. count 查询操作会分发到其他的shard碎片. 每个shar碎片会挑选一个replica副本来执行查询. 也就是说replica副本数越多，扩展性也会越好.
 
-h1. Routing
+h1. Routing路由
 
-p. The routing value (a comma separated list of the routing values) can be specified to control which shards the count request will be executed on.
+p. routing值 (逗号分隔的routing值的集合) 能够用来控制针对的是那个shard碎片来进行的操作。.
 
