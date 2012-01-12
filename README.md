@@ -1,4 +1,4 @@
-elasticsearch.org站点的中文译本
+﻿elasticsearch.org站点的中文译本
 
 该项目为elasticsearch国内爱好者自发组织的中文翻译项目，旨在让其它想学习elasticsearch提供一个快速的参考手册。
 
