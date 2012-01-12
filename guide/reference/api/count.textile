@@ -67,7 +67,7 @@ p. 当通过url参数执行count查询的时候，通过参数 @q@ 构造查询�
 |analyzer| 指定分析器来处理query string. |
 |default_operator| 指定查询条件间默认的操作符（operator），可以为 @AND@ 或者 @OR@. 默认为 @OR@. |
 
-h1. Request Body
+h1. 请求体（Request Body）
 
 p. count查询还能够通过 "Query DSL":/guide/reference/query-dsl 的方式来执行，请求的body内容也可以通过以REST参数 @source@ 的方式传递.
 
