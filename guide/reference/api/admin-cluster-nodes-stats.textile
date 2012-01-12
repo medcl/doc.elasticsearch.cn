@@ -1,11 +1,11 @@
 ---
 layout: guide
-title: Nodes Stats API
+title: 节点状态 API
 cat: guide
 sidebar: reference_api
 ---
 
-p. The cluster nodes stats API allows to retrieve one or more (or all) of the cluster nodes statistics.
+p. 通过这个 API 可以获取集群中一个或多个（甚至全部）节点的统计信息.
 
 <pre class="prettyprint">
 $ curl -XGET 'http://localhost:9200/_cluster/nodes/stats'
@@ -13,4 +13,4 @@ $ curl -XGET 'http://localhost:9200/_cluster/nodes/stats'
 $ curl -XGET 'http://localhost:9200/_cluster/nodes/nodeId1,nodeId2/stats'
 </pre>
 
-p. The first command retrieves stats of all the nodes in the cluster. The second command selectively retrieves nodes stats of only @nodeId1@ and @nodeId2@. All the nodes selective options are explained "here":index.html.
+p. 第一个命令获取集群中所有节点的状态信息. 第二个命令则仅仅选择了 @nodeId1@ and @nodeId2@. 节点的选择选择在 "这里":index.html 有详细说明.

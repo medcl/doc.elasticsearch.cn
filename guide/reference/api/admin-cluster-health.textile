@@ -1,11 +1,11 @@
 ---
 layout: guide
-title: Cluster Health API
+title: 集群健康状态 API
 cat: guide
 sidebar: reference_api
 ---
 
-p. The cluster health API allows to get a very simple status on the health of the cluster.
+p. 可以通过这个 API 获取非常简单的集群健康状态信息.
 
 <pre class="prettyprint">
 $ curl -XGET 'http://localhost:9200/_cluster/health?pretty=true'
@@ -23,32 +23,32 @@ $ curl -XGET 'http://localhost:9200/_cluster/health?pretty=true'
 }
 </pre>
 
-p. The API can also be executed against one or more indices to get just the specified indices health:
+p. 也可以对一个或多个索引执行这个 API 来获取其健康状态 :
 
 <pre class="prettyprint">
 $ curl -XGET 'http://localhost:9200/_cluster/health/test1,test2'
 </pre>
 
-p. The cluster health is status is: @green@, @yellow@ or @red@. On the shard level, a @red@ status indicates that the specific shard is not allocated in the cluster, @yellow@ means that the primary shard is allocated but replicas are not, and @green@ means that all shards are allocated. The index level status is controlled by the worst shard status. The cluster status is controlled by the worst index status.
+p. 集群的健康状态包括: @green@, @yellow@ 和 @red@. 在区块(shard)层, 状态 @red@ 表明该区块还未分配, @yellow@ 表明主区块已经分配，但复制区块还未分配, @green@ 表明所有区块都分配了. 索引层的状态是由最差的区块状态决定的. 集群的状态由最差的索引状态决定.
 
-p. One of the main benefits of the API is the ability to wait until the cluster reaches a certain health level. For example, the following Will wait till the cluster reaches the @green@ level for 50 seconds (if it reaches the @green@ status beforehand, it will return):
+p. 这个API提供了等待集群状态达到指定健康水平的能力，这非常有用。比如下面的命令会等到集群状态持续 @green@ 50秒后(如果在命令发起之前就已经是 @green@ 状态了，他会立即返回):
 
 <pre class="prettyprint">
 $ curl -XGET 'http://localhost:9200/_cluster/health?wait_for_status=green&timeout=50s'
 </pre>
 
-h1. Request Parameters
+h1. 请求参数
 
-p. The cluster health API accepts the following request parameters:
+p. 该 API 请求接受如下参数:
 
-|_. Name |_. Description |
-|level|Can be one of @cluster@, @indices@ or @shards@. Controls the details level of the health information returned. Defaults to @cluster@.|
-|wait_for_status|One of @green@, @yellow@ or @red@. Will wait (until the timeout provided) until the status of the cluster changes to the one provided. By default, will not wait for any status.|
-|wait_for_relocating_shards|A number controlling to how many relocating shards to wait for. Usually will be @0@ to indicate to wait till all relocation have happened. Defaults to not to wait.|
-|wait_for_nodes|The request waits until the specified number @N@ of nodes is available. It also accepts @>=N@, @<=N@, @>N@ and @<N@. Alternatively, it is possible to use @ge(N)@, @le(N)@, @gt(N)@ and @lt(N)@ notation.|
-|timeout|A time based parameter controlling how long to wait if one of the wait_for_XXX are provided. Defaults to @30s@.|
+|_. 参数名 |_. 说明 |
+|level|可选值为 @cluster@, @indices@ 或 @shards@. 指定返回的健康状态的详细程度. 默认为 @cluster@.|
+|wait_for_status| @green@, @yellow@ 或 @red@ 之一. 在集群健康状态变为指定状态 (直到超出 timeout 时限) 之前一直等待. 默认不等待任何状态.|
+|wait_for_relocating_shards|设定等待的区块迁移数量. 通常为 @0@ ，表明等待所有区块迁移完成. 默认不等待.|
+|wait_for_nodes|请求等到可访问节点数达到 @N@. 该参数的取值还可以是 @>=N@, @<=N@, @>N@ 和 @<N@. 或者, 也可以用 @ge(N)@, @le(N)@, @gt(N)@ 和 @lt(N)@.|
+|timeout|配合 wait_for_XXX 参数指定等待时长. 默认 @30s@.|
 
-p. The following is example of getting cluster health at the @shards@ level:
+p. 下面的例子获取 @shards@ 水平的健康状态:
 
 <pre class='prettyprint'>
 $ curl -XGET 'http://localhost:9200/_cluster/health/twitter?level=shards'
