@@ -1,17 +1,18 @@
 ---
 layout: guide
 title: Delete API
-cat: guide
-sidebar: reference_api
+cat: 向导
+cat_link: guide
+sidebar: 帮助文档_api接口
 ---
 
-p. The delete API allows to delete a typed JSON document from a specific index based on its id. The following example deletes the JSON document from an index called twitter, under a type called tweet, with id valued 1:
+p. delete删除接口允许你根据id来删除索引里面的json文档. 下面是一个简单的例子，删除这样一个JSON文档，索引是twitter，在类型tweet下面有一个id为1的文档:
 
 <pre class="prettyprint">
 $ curl -XDELETE 'http://localhost:9200/twitter/tweet/1'
 </pre>
 
-p. The result of the above delete operation is:
+p. 操作返回的结果如下:
 
 <pre class="prettyprint lang-js">
 {
@@ -23,27 +24,27 @@ p. The result of the above delete operation is:
 }
 </pre>
 
-h1. Versioning
+h1. 版本(Versioning)
 
-p. Each document indexed is versioned. When deleting a document, the @version@ can be specified to make sure the relevant document we are trying to delete is actually being deleted and it has not changed in the meantime.
+p. 每个文档都有版本控制的，通过指定 @version@ 来保证删除的对象的时候，没有删错。.
 
-h1. Routing
+h1. 路由(Routing)
 
-p. When indexing using the ability to control the routing, in order to delete a document, the routing value should also be provided. For example:
+p. 如果索引的时候指定了routing信息，那么删除的时候，也必须指定routing信息，如:
 
 <pre class="prettyprint">
 $ curl -XDELETE 'http://localhost:9200/twitter/tweet/1?routing=kimchy'
 </pre>
 
-p. The above will delete a tweet with id 1, but will be routed based on the user. Note, issuing a delete without the correct routing, will cause the document to not be deleted.
+p. 以上删除了id为1的一条tweet, 并且会通过user来进行路由，注意，如果没有指定正确的routing值，删除可能会失败.
 
-p. Many times, the routing value is not known when deleting a document. For those cases, when specifying the @_routing@ mapping as @required@, and no routing value is specified, the delete will be broadcasted automatically to all shards.
+p. 很多时候，routing值可能我们并不知道，在这种情况下，如果在mapping里面配置了 @_routing@ 为 @required@, 而你没有指定routing, 则删除操作会分发广播到其他shard上去.
 
-h1. Parent
+h1. 父对象(Parent)
 
-p. The @parent@ parameter can be set, which will basically be the same as setting the routing parameter.
+p. 参数 @parent@ 和routing一样，同样是为了设置合适的routing值.
 
-p. Note that deleting a parent document does not automatically delete its children. One way of deleting all child documents given a parent's id is to perform a "delete by query":delete-by-query.html on the child index with the automatically generated (and indexed) field ==_parent==, which is in the format ==parent_type#parent_id==.
+p. 注意，删除一个父对象，并不会自动的删除它的子对象，一个删除所有子对象的方法是将父对象的id作为参数，然后在子类型上使用 "delete by query":delete-by-query.html 操作，on the child index with the automatically generated (and indexed) field ==_parent==, which is in the format ==parent_type#parent_id==.
 
 h1. Automatic for the Index
 
