@@ -5,7 +5,7 @@ cat: guide
 sidebar: reference_query_dsl
 ---
 
-p. The @has_child@ query works the same as the "has_child":has-child-filter.html filter, by automatically wrapping the filter with a "constant_score":constant-score-query.html. It has the same syntax as the "has_child":has-child-filter.html filter:
+p. @has_child@ 查询仅仅是将一个 "has_child":has-child-filter.html 过滤器包含进了一个 "constant_score":constant-score-query.html 中. 他的语法跟 "has_child":has-child-filter.html filter 是一样的:
 
 <pre class="prettyprint lang-js">
 {
@@ -38,6 +38,6 @@ p. A @_scope@ can be defined on the filter allowing to run facets on the same sc
 }    
 </pre>
 
-h1. Memory Considerations
+h1. 内存考量
 
-p. With the current implementation, all @_id@ values are loaded to memory (heap) in order to support fast lookups, so make sure there is enough mem for it.
+p. 目前的实现方式是, 所有 @_id@ 的值都被载入了内存(堆)以便于更快的查找, 所以请确认有足够的内存来保存它们.
