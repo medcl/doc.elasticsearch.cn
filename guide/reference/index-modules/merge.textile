@@ -1,22 +1,22 @@
 ---
 layout: guide
-title: ºÏ²¢ Merge
-cat: Ïòµ¼
+title: åˆå¹¶ Merge
+cat: å‘å¯¼
 cat_link: guide
-sidebar: °ïÖúÎÄµµ_Ë÷ÒıÄ£¿é
+sidebar: å¸®åŠ©æ–‡æ¡£_ç´¢å¼•æ¨¡å—
 ---
 
-p. elasticsearchÀïÃæµÄÒ»¸öËéÆ¬¼´luceneµÄÒ»¸öË÷Òı£¬¶øluceneµÄË÷ÒıÓÖ·Ö½âÎª¶Î£¨segment£©£¬¶ÎÊÇluceneË÷ÒıÀï´æ´¢Ë÷ÒıÊı¾İµÄ´æ´¢µ¥Ôª£¬ÔÚÄã´òÉÏÉ¾³ıµÄ±ê¼ÇÖ®Ç°Ëü¶¼ÊÇ²»±äµÄ£¬¶Î»áÖÜÆÚµÄºÏ²¢µ½Ò»¸ö´óµÄ¶ÎÎÄ¼şÖĞ£¬ÕâÑù¿ØÖÆË÷ÒıÎÄ¼ş´óĞ¡ºÍÎÄ¼şÊıÁ¿£¬²¢³¹µ×É¾³ıÖ®Ç°±ê¼ÇÎª¡°delete¡±µÄË÷Òı.
+p. elasticsearché‡Œé¢çš„ä¸€ä¸ªç¢ç‰‡å³luceneçš„ä¸€ä¸ªç´¢å¼•ï¼Œè€Œluceneçš„ç´¢å¼•åˆåˆ†è§£ä¸ºæ®µï¼ˆsegmentï¼‰ï¼Œæ®µæ˜¯luceneç´¢å¼•é‡Œå­˜å‚¨ç´¢å¼•æ•°æ®çš„å­˜å‚¨å•å…ƒï¼Œåœ¨ä½ æ‰“ä¸Šåˆ é™¤çš„æ ‡è®°ä¹‹å‰å®ƒéƒ½æ˜¯ä¸å˜çš„ï¼Œæ®µä¼šå‘¨æœŸçš„åˆå¹¶åˆ°ä¸€ä¸ªå¤§çš„æ®µæ–‡ä»¶ä¸­ï¼Œè¿™æ ·æ§åˆ¶ç´¢å¼•æ–‡ä»¶å¤§å°å’Œæ–‡ä»¶æ•°é‡ï¼Œå¹¶å½»åº•åˆ é™¤ä¹‹å‰æ ‡è®°ä¸ºâ€œdeleteâ€çš„ç´¢å¼•.
 
-p. luceneË÷ÒıÀïÃæ£¬¶ÎÔ½¶àÒâÎ¶×ÅËÑË÷µÄÊ±ºòËÙ¶È»áÔ½Âı£¬²¢ÇÒºÄ·ÑµÄÄÚ´æÔ½¶à£¬Í¬Ê±¶ÎÔ½ÉÙÒ²ÒâÎ¶×ÅĞèÒª¸ü¶àµÄ¶ÎºÏ²¢²Ù×÷.
+p. luceneç´¢å¼•é‡Œé¢ï¼Œæ®µè¶Šå¤šæ„å‘³ç€æœç´¢çš„æ—¶å€™é€Ÿåº¦ä¼šè¶Šæ…¢ï¼Œå¹¶ä¸”è€—è´¹çš„å†…å­˜è¶Šå¤šï¼ŒåŒæ—¶æ®µè¶Šå°‘ä¹Ÿæ„å‘³ç€éœ€è¦æ›´å¤šçš„æ®µåˆå¹¶æ“ä½œ.
 
-h1. ²ßÂÔ Policy
+h1. ç­–ç•¥ Policy
 
-p. Ë÷ÒıºÏ²¢²ßÂÔÄ£¿éÔÊĞíÄã¶ÔÒª½øĞĞºÏ²¢µÄË÷ÒıËéÆ¬µÄÄ³¸ö¶Î½øĞĞ¿ØÖÆ£¬ÓĞÈçÏÂ²ßÂÔÀàĞÍ£¬Ä¬ÈÏÊÇ  @tiered@.
+p. ç´¢å¼•åˆå¹¶ç­–ç•¥æ¨¡å—å…è®¸ä½ å¯¹è¦è¿›è¡Œåˆå¹¶çš„ç´¢å¼•ç¢ç‰‡çš„æŸä¸ªæ®µè¿›è¡Œæ§åˆ¶ï¼Œæœ‰å¦‚ä¸‹ç­–ç•¥ç±»å‹ï¼Œé»˜è®¤æ˜¯  @tiered@.
 
 h2. tiered
 
-p. ¶ÎºÏ²¢´óÖÂµÈÓÚ´óĞ¡£¬ºÍ @log_bytes_size@ ²î²»¶à£¬ Merges segments of approximately equal size, subject to an allowed number of segments per tier. This is similar to @log_bytes_size@ merge policy, except this merge policy is able to merge non-adjacent segment, and separates how many segments are merged at once from how many segments are allowed per tier. This merge policy also does not over-merge (ie, cascade merges).
+p. æ®µåˆå¹¶å¤§è‡´ç­‰äºå¤§å°ï¼Œå’Œ @log_bytes_size@ å·®ä¸å¤šï¼Œ Merges segments of approximately equal size, subject to an allowed number of segments per tier. This is similar to @log_bytes_size@ merge policy, except this merge policy is able to merge non-adjacent segment, and separates how many segments are merged at once from how many segments are allowed per tier. This merge policy also does not over-merge (ie, cascade merges).
 
 p. This policy has the following settings:
 
