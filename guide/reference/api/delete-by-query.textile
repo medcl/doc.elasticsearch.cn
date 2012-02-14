@@ -1,11 +1,13 @@
 ---
 layout: guide
 title: Delete By Query API
-cat: guide
-sidebar: reference_api
+cat: 向导
+cat_link: guide
+sidebar: 帮助文档_api接口
 ---
 
-p. The delete by query API allows to delete documents from one or more indices and one or more types based on a query. The query can either be provided using a simple query string as a parameter, or using the "Query DSL":/guide/reference/query-dsl defined within the request body. Here is an example:
+p. 该接口允许你通过执行一个查询来批量删除，可以通过简单query string参数或者是 "Query DSL":/guide/reference/query-dsl 的方式，下面是一个简单的例子：
+The delete by query API allows to delete documents from one or more indices and one or more types based on a query. The query can either be provided using a simple query string as a parameter, or using the "Query DSL":/guide/reference/query-dsl defined within the request body. Here is an example:
 
 <pre class="prettyprint">
 $ curl -XDELETE 'http://localhost:9200/twitter/tweet/_query?q=user:kimchy'
@@ -16,7 +18,8 @@ $ curl -XDELETE 'http://localhost:9200/twitter/tweet/_query' -d '{
 '
 </pre>
 
-p. Both above examples end up doing the same thing, which is delete all tweets from the twitter index for a certain user. The result of the commands is:
+p. 上面的两个例子都是删除twitter索引下面某个用户的操作，操作将返回如下信息：
+Both above examples end up doing the same thing, which is delete all tweets from the twitter index for a certain user. The result of the commands is:
 
 <pre class="prettyprint lang-js">
 {
@@ -33,42 +36,50 @@ p. Both above examples end up doing the same thing, which is delete all tweets f
 }
 </pre>
 
-p. Note, delete by query bypasses versioning support. Also, it is not recommended to delete "large chunks of the data in an index", many times, its better to simply reindex into a new index.
+p. 注，删除的时候还可以传递版本信息，另外，不推荐一次性删除大量的数据，大多数情况下，将数据重建到一个新的索引上会好一些
+Note, delete by query bypasses versioning support. Also, it is not recommended to delete "large chunks of the data in an index", many times, its better to simply reindex into a new index.
 
-h1. Multiple Indices and Types
+h1. 多索引和多类型（Multiple Indices and Types）
 
-p. The delete by query API can be applies to multiple types within an index, and across multiple indices. For example, we can delete all documents across all types within the twitter index:
+p. delete by query可以在一个索引或者多个索引上执行，同理一个类型或多个类型都是支持的。
+The delete by query API can be applies to multiple types within an index, and across multiple indices. For example, we can delete all documents across all types within the twitter index:
 
 <pre class="prettyprint">
 $ curl -XDELETE 'http://localhost:9200/twitter/_query?q=user:kimchy'
 </pre>
 
-p. We can also delete within specific types:
+p. 删除指定类型的数据
+We can also delete within specific types:
 
 <pre class="prettyprint">
 $ curl -XDELETE 'http://localhost:9200/twitter/tweet,user/_query?q=user:kimchy'
 </pre>
 
-p. We can also delete all tweets with a certain tag across several indices (for example, when each user has his own index):
+p. 删除多个索引下的数据
+We can also delete all tweets with a certain tag across several indices (for example, when each user has his own index):
 
 <pre class="prettyprint">
 $ curl -XDELETE 'http://localhost:9200/kimchy,elasticsearch/_query?q=tag:wow'
 </pre>
 
-p. Or even delete across all indices:
+p. 甚至索引索引下
+Or even delete across all indices:
 
 <pre class="prettyprint">
 $ curl -XDELETE 'http://localhost:9200/_all/_query?q=tag:wow'
 </pre>
 
-h1. Request Parameters
+h1. 可接受的参数（Request Parameters）
 
-p. When executing a delete by query using the query parameter @q@, the query passed is a query string using Lucene query parser. There are additional parameters that can be passed:
+p. 可以接受参数q来传递查询条件，另外还有如下额外的参数可以配置
+When executing a delete by query using the query parameter @q@, the query passed is a query string using Lucene query parser. There are additional parameters that can be passed:
 
 |_. Name |_. Description |
-|df| The default field to use when no field prefix is defined within the query. |
-|analyzer| The analyzer name to be used when analyzing the query string. |
-|default_operator| The default operator to be used, can be @AND@ or @OR@. Defaults to @OR@. |
+|df| 默认的字段，如果你的查询条件没有指定前缀的时候，默认使用这个字段作为限定符。The default field to use when no field prefix is defined within the query. |
+|analyzer| 处理query string的默认分析器。The analyzer name to be used when analyzing the query string. |
+|default_operator| 默认的操作符，可以是 @AND@ 或 @OR@ ,默认是 @OR@ 。 The default operator to be used, can be @AND@ or @OR@. Defaults to @OR@. |
+
+以下内容和delete接口类似，参照 "Delete":/guide/reference/api/delete.html
 
 h1. Request Body
 
