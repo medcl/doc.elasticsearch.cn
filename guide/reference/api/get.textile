@@ -1,17 +1,20 @@
 ---
 layout: guide
 title: Get API
-cat: guide
-sidebar: reference_api
+cat: 向导
+cat_link: guide
+sidebar: 帮助文档_api接口
 ---
 
-p. The get API allows to get a typed JSON document from the index based on its id. The following example gets a JSON document from an index called twitter, under a type called tweet, with id valued 1:
+p. GET接口用来通过id来获取索引文档内容，如下，索引名称为twitter，类型为tweet，id为1。
+The get API allows to get a typed JSON document from the index based on its id. The following example gets a JSON document from an index called twitter, under a type called tweet, with id valued 1:
 
 <pre class="prettyprint">
 curl -XGET 'http://localhost:9200/twitter/tweet/1'
 </pre>
 
-p. The result of the above get operation is:
+p. 操作结果为：
+The result of the above get operation is:
 
 <pre class="prettyprint lang-js">
 {
@@ -26,54 +29,67 @@ p. The result of the above get operation is:
 }
 </pre>
 
-p. The above result includes the @_index@, @_type@, and @_id@ of the document we wish to retrieve, including the actual source of the document that was indexed.
+p. 上面返回的结果中包含了你想要得到的文档的索引名称、类型和id（ @_index@, @_type@, and @_id@），并且包含了实际的文档的source内容。
+The above result includes the @_index@, @_type@, and @_id@ of the document we wish to retrieve, including the actual source of the document that was indexed.
 
-h1. Realtime
+h1. 实时（Realtime）
 
-p. By default, the get API is realtime, and is not affected by the refresh rate of the index (when data will become visible for search).
+p. GET接口默认就是实时的，并且不受refresh频率的影响（refresh之后可以被search到）
+By default, the get API is realtime, and is not affected by the refresh rate of the index (when data will become visible for search).
 
-p. In order to disable realtime GET, one can either set @realtime@ parameter to @false@, or globally default it to by setting the @action.get.realtime@ to @false@ in the node configuration.
+p. 如果要停用realtime方式的GET，可以通过设置参数 @realtime@ 为  @false@ ,或者在节点级别做全局的设置， @action.get.realtime@ .
+In order to disable realtime GET, one can either set @realtime@ parameter to @false@, or globally default it to by setting the @action.get.realtime@ to @false@ in the node configuration.
 
-p. When getting a document, one can specify @fields@ to fetch from it. They will, when possible, be fetched as stored fields (fields mapped as stored in the mapping). When using realtime GET, there is no notion of stored fields (at least for a period of time, basically, until the next flush), so they will be extracted from the source itself (note, even if source is not enabled). It is a good practice to assume that the fields will be loaded from source when using realtime GET, even if the fields are stored.
+p. 当获取一个文档的时候，可以通过设置参数 @fields@ 来返回只需要的字段，如果可能的话，会优先从索引里面（字段存储（store）设置为true）拿数据，当使用实时GET的时候，es会从source来抽取字段信息。
+When getting a document, one can specify @fields@ to fetch from it. They will, when possible, be fetched as stored fields (fields mapped as stored in the mapping). When using realtime GET, there is no notion of stored fields (at least for a period of time, basically, until the next flush), so they will be extracted from the source itself (note, even if source is not enabled). It is a good practice to assume that the fields will be loaded from source when using realtime GET, even if the fields are stored.
 
-h1. Optional Type
+h1. 可选类型（Optional Type）
 
-p. The get API allows for @_type@ to be optional. Set it to @_all@ in order to fetch the first document matching the id across all types.
+p. get接口的类型为可选的，如果设置为 @_all@ ，则会从所有的类型中去拿第一个和id匹配的文档。
+The get API allows for @_type@ to be optional. Set it to @_all@ in order to fetch the first document matching the id across all types.
 
-h1. Fields
+h1. 字段（Fields）
 
-p. The get operation allows to specify a set of fields that will be returned (by default, its the @_source@ field) by passing the @fields@ parameter. For example:
+p. 设置需要返回的字段。
+The get operation allows to specify a set of fields that will be returned (by default, its the @_source@ field) by passing the @fields@ parameter. For example:
 
 <pre class="prettyprint">
 curl -XGET 'http://localhost:9200/twitter/tweet/1?fields=title,content'
 </pre>
 
-p. The returned fields will either be loaded if they are stored, or fetched from the @_source@ (parsed and extracted). It also supports sub objects extraction from _source, like @obj1.obj2@.
+p. 如果你索引文档是层级对象，子对象属性的抽取也是支持的如：@obj1.obj2@
+The returned fields will either be loaded if they are stored, or fetched from the @_source@ (parsed and extracted). It also supports sub objects extraction from _source, like @obj1.obj2@.
 
-h1. Routing
+h1. 路由（Routing）
 
-p. When indexing using the ability to control the routing, in order to get a document, the routing value should also be provided. For example:
+p. 索引的时候可以通过routing来控制路由，那么获取该文档的时候，也需要提供对应的routing值
+When indexing using the ability to control the routing, in order to get a document, the routing value should also be provided. For example:
 
 <pre class="prettyprint">
 curl -XGET 'http://localhost:9200/twitter/tweet/1?routing=kimchy'
 </pre>
 
-p. The above will get a tweet with id 1, but will be routed based on the user. Note, issuing a get without the correct routing, will cause the document not to be fetched.
+p. 上面会获取id为1的tweet，并且是根据user来进行路由的，如果routing值不正确，那么可能造成获取不到。
+The above will get a tweet with id 1, but will be routed based on the user. Note, issuing a get without the correct routing, will cause the document not to be fetched.
 
-h1. Preference
+h1. 优先级（Preference）
 
-p. Controls a @preference@ of which shard replicas to execute the get request on. By default, the operation is randomized between the each shard replicas.
+p. 通过参数 @preference@ 来配置优先到哪一个shard副本上执行，默认是随机选取
+Controls a @preference@ of which shard replicas to execute the get request on. By default, the operation is randomized between the each shard replicas.
 
+优先级可选参数为：
 The @preference@ can be set to:
 
-* @_primary@: The operation will go and be executed only on the primary shards.
-* @_local@: The operation will prefer to be executed on a local allocated shard is possible.
-* Custom (string) value: A custom value will be used to guarantee that the same shards will be used for the same custom value. This can help with "jumping values" when hitting different shards in different refresh states. A sample value can be something like the web session id, or the user name.
+* @_primary@: 只在主碎片上执行（每个复制组，有一个主碎片）The operation will go and be executed only on the primary shards.
+* @_local@: 如果可能只在本地碎片上执行。The operation will prefer to be executed on a local allocated shard is possible.
+* Custom (string) value: 自定义。A custom value will be used to guarantee that the same shards will be used for the same custom value. This can help with "jumping values" when hitting different shards in different refresh states. A sample value can be something like the web session id, or the user name.
 
-h1. Refresh
+h1. 刷新（Refresh）
 
-p. The @refresh@ parameter can be set to @true@ in order to refresh the relevant shard before the get operation and make it searchable. Setting it to @true@ should be done after careful thought and verification that this does not cause a heavy load on the system (and slows down indexing).
+p. 当设置刷新参数 @refresh@  为 @true@ 的时候，会预先执行刷新操作来保证所有的内容都可以搜索到，同样注意该操作造成的负载。
+The @refresh@ parameter can be set to @true@ in order to refresh the relevant shard before the get operation and make it searchable. Setting it to @true@ should be done after careful thought and verification that this does not cause a heavy load on the system (and slows down indexing).
 
-h1. Distributed
+h1. 分布式（Distributed）
 
+获取操作会hash到指定的shard id上去，然后自动跳转到任意shard副本上，然后返回相应的数据，也就是说，副本越多，get操作的伸缩性越好。
 The get operation gets hashed into a specific shard id. It then gets redirected to one of the replicas within that shard id and returns the result. The replicas are the primary shard and its replicas within that shard id group. This means that the more replicas we will have, the better GET scaling we will have.
