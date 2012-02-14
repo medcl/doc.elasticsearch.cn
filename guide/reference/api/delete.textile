@@ -46,24 +46,28 @@ p. 参数 @parent@ 和routing一样，同样是为了设置合适的routing值.
 
 p. 注意，删除一个父对象，并不会自动的删除它的子对象，一个删除所有子对象的方法是将父对象的id作为参数，然后在子类型上使用 "delete by query":delete-by-query.html 操作，on the child index with the automatically generated (and indexed) field ==_parent==, which is in the format ==parent_type#parent_id==.
 
-h1. Automatic for the Index
+h1. 索引的自动模式
 
-p. The delete operation automatically creates an index if it has not been created before (check out the "create index API":admin-indices-create-index.html for manually creating an index), and also automatically creates a dynamic type mapping for the specific type if it has not been created before (check out the "put mapping":admin-indices-put-mapping.html API for manually creating type mapping). 
+p. 如果这个索引之前不存在，删除操作会自动创建该索引 (查看 "创建接口（create index API）":admin-indices-create-index.html 来了解怎样手动创建索引), 如果这个类型不存在，那么也会自动创建该动态类型 (查看 "提交Mapping（put mapping）":admin-indices-put-mapping.html 接口来了解如何创建Mapping信息). 
 
-h1. Distributed
+h1. 分布式
 
-The delete operation gets hashed into a specific shard id. It then gets redirected into the primary shard within that id group, and replicated (if needed) to shard replicas within that id group.
+删除操作通过shard碎片Id会自动Hash路由到指定的shard节点. 然后会跳转到该组的Primary Shard上, 然后执行该shard上的replica操作（如果该shard有副本的话，会在副本上执行相应的shard操作，即删除，如此等等）.
 
-h1. Replication Type
+h1. 复制类型（Replication Type）
 
-p. The replication of the operation can be done in an asynchronous manner to the replicas (the operation will return once it has be executed on the primary shard). The @replication@ parameter can be set to @async@ (defaults to @sync@) in order to enable it.
+p. 复制的操作可以采用异步的方式来进行（索引操作在primary shard执行成功就可以立即返回），复制方式还可以通过参数  @replication@ 来进行指定,可以设置为 @async@  和 @sync@ ，默认为 @sync@ 
+The replication of the operation can be done in an asynchronous manner to the replicas (the operation will return once it has be executed on the primary shard). The @replication@ parameter can be set to @async@ (defaults to @sync@) in order to enable it.
 
-h1. Write Consistency
+h1. 写一致性（Write Consistency）
 
-p. Control if the operation will be allowed to execute based on the number of active shards within that partition (replication group). The values allowed are @one@, @quorum@, and @all@. The parameter to set it is @consistency@, and it defaults to the node level setting of @action.write_consistency@ which in turn defaults to @quorum@.
+p. 控制在一个复制组里面，索引操作需要在多少个active shard（补充：什么是active shard？索引设置了副本，但是由于机器不够，副本而没有分配出去的叫做unassigned shard，都分配在节点上了则都属于active shard，另外每个shard复制组里面，同一个时间，只有一个primary shard）上执行才算完成，可以通过参数 @consistency@ 来进行设置，可选参数为 @one@, @quorum@, 和 @all@ ，默认会使用节点基本的配置 @action.write_consistency@ ，其默认值为 @quorum@.
+Control if the operation will be allowed to execute based on the number of active shards within that partition (replication group). The values allowed are @one@, @quorum@, and @all@. The parameter to set it is @consistency@, and it defaults to the node level setting of @action.write_consistency@ which in turn defaults to @quorum@.
 
-p. For example, in a N shards with 2 replicas index, there will have to be at least 2 active shards within the relevant partition (@quorum@) for the operation to succeed. In a N shards with 1 replica scenario, there will need to be a single shard active (in this case, @one@ and @quorum@ is the same).
+p. 举例来说，在N个碎片和2个副本是索引里面，当配置为@quorum@的情况下，至少需要在2个shard上执行成功才算成功，在N个碎片和1个副本的场景下，那么只需要在一个shard上执行成功就可以了。
+For example, in a N shards with 2 replicas index, there will have to be at least 2 active shards within the relevant partition (@quorum@) for the operation to succeed. In a N shards with 1 replica scenario, there will need to be a single shard active (in this case, @one@ and @quorum@ is the same).
 
-h1. Refresh
+h1. 刷新（Refresh）
 
-p. The @refresh@ parameter can be set to @true@ in order to refresh the relevant shard after the delete operation has occurred and make it searchable. Setting it to @true@ should be done after careful thought and verification that this does not cause a heavy load on the system (and slows down indexing).
+p. 当 @refresh@ 参数设置为 @true@ 的时候，会立即更新相关shard碎片，使用的时候，需要确保该操作会不会对系统造成大量的负载。
+The @refresh@ parameter can be set to @true@ in order to refresh the relevant shard after the delete operation has occurred and make it searchable. Setting it to @true@ should be done after careful thought and verification that this does not cause a heavy load on the system (and slows down indexing).
