@@ -1,50 +1,68 @@
 ---
 layout: guide
 title: Search API - Search Type
-cat: ��
+cat: 向导
 cat_link: guide
 sidebar: reference_api_search
 ---
 
-p. There are different execution paths that can be done when executing a distributed search. The distributed search operation needs to be scattered to all the relevant shards and then all the results are gathered back. When doing scatter/gather type execution, there are several ways to do that, specifically with search engines.
+p. 执行一个分布式的搜索操作可以有不同的执行路径，分布式搜索操作需要将查询操作分发到所有相关的碎片（分片）上去执行，然后再将查询结果收集回来。对搜索引擎而言，可以有多种方式来进行选择。
+There are different execution paths that can be done when executing a distributed search. The distributed search operation needs to be scattered to all the relevant shards and then all the results are gathered back. When doing scatter/gather type execution, there are several ways to do that, specifically with search engines.
 
-p. One of the questions when executing a distributed search is how much results to retrieve from each shard. For example, if we have 10 shards, the 1st shard might hold the most relevant results from 0 till 10, with other shards results ranking below it. For this reason, when executing a request, we will need to get results from 0 till 10 from all shards, sort them, and then return the results if we want to insure correct results.
+p. 执行分布搜索的其中一个问题是每个碎片返回多少个结果，举例来说，如果我们有10个碎片，第一个碎片也许包含了大多数我们需要的数据，排名从0到10都是在该shard里面，而其他碎片的查询结果的评分都比这个10个要低，为此，如果要保证查询结果排序正确，那么，当执行一个查询请求，我们需要从所有的shard上获取评分最高的10个结果，然后对所有的这些结果进行排序，然后再将得分最高的10个结果返回给用户。
+One of the questions when executing a distributed search is how much results to retrieve from each shard. For example, if we have 10 shards, the 1st shard might hold the most relevant results from 0 till 10, with other shards results ranking below it. For this reason, when executing a request, we will need to get results from 0 till 10 from all shards, sort them, and then return the results if we want to insure correct results.
 
-p. Another question, which relates to search engine, is the fact that each shard stands on its own. When a query is executed on a specific shard, it does not take into account term frequencies and other search engine information from the other shards. If we want to support accurate ranking, we would need to first execute the query against all shards and gather the relevant term frequencies, and then, based on it, execute the query.
+p. 另外一个和搜索引擎相关的问题是，每个shard碎片都是各自独立的，当在某一个碎片上执行查询的时候，该碎片不会考虑其它碎片上的TF（词频Term-Frequency）信息以及其它索引信息，如果我们要支持高精度的结果排序，我们搜索应该搜索所有相关的shard碎片，然后收集相关的词频等索引信息，然后根据这些信息，再来进行ranking排序。
+Another question, which relates to search engine, is the fact that each shard stands on its own. When a query is executed on a specific shard, it does not take into account term frequencies and other search engine information from the other shards. If we want to support accurate ranking, we would need to first execute the query against all shards and gather the relevant term frequencies, and then, based on it, execute the query.
 
-p. Also, because of the need to sort the results, getting back a large document set, or even scrolling it, while maintaing the correct sorting behavior can be a very expensive operation. For large result set scrolling without sorting, the @scan@ search type (explained below) is also available.
+p. 另外，由于需要对结果进行排序，需要返回大量的文档集，又或者是执行索引的scrolling操作，执行排序操作是一个开销非常大的操作，当对大数据集进行scrolling操作并且不执行排序操作的时候，@scan@ 参数（下面要介绍的）可被用来进行设置。
+Also, because of the need to sort the results, getting back a large document set, or even scrolling it, while maintaing the correct sorting behavior can be a very expensive operation. For large result set scrolling without sorting, the @scan@ search type (explained below) is also available.
 
-p. ElasticSearch is very flexible and allows to control the type of search to execute on a *per search request* basis.  The type can be configured by setting the *search_type* parameter in the query string. The types are:
+p. ElasticSearch 非常灵活，通过配置url参数: *search_type* ,允许你控制每次查询请求所使用的搜索类型，如下几种：
+ElasticSearch is very flexible and allows to control the type of search to execute on a *per search request* basis.  The type can be configured by setting the *search_type* parameter in the query string. The types are:
 
 h1. Query And Fetch
 
-p. Parameter value: *query_and_fetch*.
+p. 参数值： *query_and_fetch*
+Parameter value: *query_and_fetch*.
 
-p. The most naive (and possibly fastest) implementation is to simply execute the query on all relevant shards and return the results. Each shard returns @size@ results. Since each shard already returns @size@ hits, this type actually returns @size@ times @number of shards@ results back to the caller.
+p. 最朴素的实现方式（也行是最快的），简单的在所有相关的shard上执行，然后返回结果，每个shard都返回 @size@ 个结果，因为每个shard都返回了 @size@ 个数目的结果，所有最终返回给调用者的结果数为：@size@ X @number of shards@ (返回结果大小乘以碎片数，没错，如果5个碎片，size为10，那么查询返回最多为50个，而不是10个)
+The most naive (and possibly fastest) implementation is to simply execute the query on all relevant shards and return the results. Each shard returns @size@ results. Since each shard already returns @size@ hits, this type actually returns @size@ times @number of shards@ results back to the caller.
+
+举例如下： http://localhost:9200/index/_search?q=*&search_type=query_and_fetch
 
 h1. Query Then Fetch
 
-p. Parameter value: *query_then_fetch*.
+p. 参数值： *query_then_fetch*
+Parameter value: *query_then_fetch*.
 
-p. The query is executed against all shards, but only enough information is returned (*not the document content*). The results are then sorted and ranked, and based on it, *only the relevant shards* are asked for the actual document content. The return number of hits is exactly as specified in @size@, since they are the only ones that are fetched. This is very handy when the index has a lot of shards (not replicas, shard id groups).
+p. 查询会针对所有的shard，但是只返回需要的足够信息（而不是完整的文档内容）。然后再去获取相关的shard获取实际的文档内容（这下内容就少多了），然后再进行排序和评分。这次返回的结果数就是你指定的 @size@ 大小了，因为也只fetch了这么多的文档，当你一个索引有很多shard的时候（不包含副本，说的是在同一个shard组的shard，即创建索引的时候，指定的shard数），这个是非常有用的。The query is executed against all shards, but only enough information is returned (*not the document content*). The results are then sorted and ranked, and based on it, *only the relevant shards* are asked for the actual document content. The return number of hits is exactly as specified in @size@, since they are the only ones that are fetched. This is very handy when the index has a lot of shards (not replicas, shard id groups).
 
 h1. Dfs, Query And Fetch
 
 p. Parameter value: *dfs_query_and_fetch*.
 
-p. Same as "Query And Fetch", except for an initial scatter phase which goes and computes the distributed term frequencies for more accurate scoring.
+p. 和"Query And Fetch"一样，只不过在初始化请求分发的阶段，进行了分布式的词频计算来保证更加精准的打分。
+Same as "Query And Fetch", except for an initial scatter phase which goes and computes the distributed term frequencies for more accurate scoring.
 
 h1. Dfs, Query Then Fetch
 
 p. Parameter value: *dfs_query_then_fetch*.
 
-p. Same as "Query Then Fetch", except for an initial scatter phase which goes and computes the distributed term frequencies for more accurate scoring.
+p. 和"Query Then Fetch"一样，也只不过在初始化请求分发的阶段，进行了分布式的词频计算来保证更加精准的打分。
+Same as "Query Then Fetch", except for an initial scatter phase which goes and computes the distributed term frequencies for more accurate scoring.
 
-h1. Count
+h1. 计数（Count）
 
 p. Parameter value: *count*.
 
-p. A special search type that returns the count that matched the search request without any docs (represented in @total_hits@), and possibly, including facets as well. In general, this is preferable to the @count@ API as it provides more options.
+p. 一个特殊的查询类型，返回结果总数，如果可能，也会返回facets总数。
+A special search type that returns the count that matched the search request without any docs (represented in @total_hits@), and possibly, including facets as well. In general, this is preferable to the @count@ API as it provides more options.
+如：http://localhost:9200/index/_search?q=*&search_type=count
+返回结果：
+<pre class="prettyprint">
+{"took":7,"timed_out":false,"_shards":{"total":3,"successful":3,"failed":0},"hits":{"total":219705,"max_score":0.0,"hits":[]}}
+</pre>
 
 h1. Scan
 
