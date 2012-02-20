@@ -3,7 +3,7 @@ layout: guide
 title: Delete API
 cat: 向导
 cat_link: guide
-sidebar: 帮助文档_api接口
+sidebar: reference_api
 ---
 
 p. delete删除接口允许你根据id来删除索引里面的json文档. 下面是一个简单的例子，删除这样一个JSON文档，索引是twitter，在类型tweet下面有一个id为1的文档:

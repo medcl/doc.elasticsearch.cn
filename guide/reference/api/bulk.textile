@@ -3,7 +3,7 @@ layout: guide
 title: Bulk批量接口
 cat: 向导
 cat_link: guide
-sidebar: 帮助文档_api接口
+sidebar: reference_api
 ---
 
 p. 批量接口允许你一次执行多个 index/delete 操作. 通过批量接口可以大大提高索引的速度. 对应的 REST 接口为： @/_bulk@, 接受如下格式的参数:

@@ -1,7 +1,8 @@
 ---
 layout: guide
 title: Search API - Search Type
-cat: guide
+cat: Ïòµ¼
+cat_link: guide
 sidebar: reference_api_search
 ---
 

@@ -3,7 +3,7 @@ layout: guide
 title: Search API - Highlighting
 cat: 向导
 cat_link: guide
-sidebar: 帮助文档_api_search
+sidebar: reference_api_search
 ---
 
 p. 实现对搜索结果的一个或者多个字段进行高亮. 使用Lucene的 @fast-vector-highlighter@ 或者 @highlighter@ 来实现. 搜索请求的Body如下:

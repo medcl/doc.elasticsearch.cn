@@ -3,7 +3,7 @@ layout: guide
 title: API
 cat: 向导
 cat_link: guide
-sidebar: 帮助文档_api
+sidebar: reference_api
 ---
 
 p. 这部分描述 *elasticsearch* 提供的 REST API接口，使用数据格式主要是Json.  API 接口通过以下方式暴露 "HTTP":/guide/reference/modules/http.html , "thrift":/guide/reference/modules/thrift.html, "memcached":/guide/reference/modules/memcached.html.

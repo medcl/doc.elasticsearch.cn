@@ -3,7 +3,7 @@ layout: guide
 title: Get API
 cat: 向导
 cat_link: guide
-sidebar: 帮助文档_api接口
+sidebar: reference_api
 ---
 
 p. GET接口用来通过id来获取索引文档内容，如下，索引名称为twitter，类型为tweet，id为1。

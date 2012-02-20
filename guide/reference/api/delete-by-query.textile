@@ -3,7 +3,7 @@ layout: guide
 title: Delete By Query API
 cat: 向导
 cat_link: guide
-sidebar: 帮助文档_api接口
+sidebar: reference_api
 ---
 
 p. 该接口允许你通过执行一个查询来批量删除，可以通过简单query string参数或者是 "Query DSL":/guide/reference/query-dsl 的方式，下面是一个简单的例子：
