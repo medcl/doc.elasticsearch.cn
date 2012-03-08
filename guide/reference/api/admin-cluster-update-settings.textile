@@ -1,11 +1,11 @@
 ---
 layout: guide
-title: Cluster Update Settings API
+title: 更新集群设置的 API
 cat: guide
 sidebar: reference_api
 ---
 
-p. Allow to update cluster wide specific settings. Settings updated can either be persistent (applied cross restarts) or transient (will not survive a full cluster restart). Here is an example:
+p. 可以修改整个集群的特定设置. 设置的修改可以保存 (重启后仍然生效) 或者 是临时的 (不会保留到下次重启后). 请看示例:
 
 
 <pre class="prettyprint">
@@ -16,7 +16,7 @@ curl -XPUT localhost:9200/_cluster/settings -d '{
 }'
 </pre>
 
-p. Or:
+p. 或者:
 
 <pre class="prettyprint">
 curl -XPUT localhost:9200/_cluster/settings -d '{
@@ -26,7 +26,7 @@ curl -XPUT localhost:9200/_cluster/settings -d '{
 }'
 </pre>
 
-There is a specific list of settings that can be updated, those include:
+下面是可修改的设置列表：
 
 * @discovery.zen.minimum_master_nodes@
 * @index.shard.recovery.concurrent_streams@
@@ -43,6 +43,6 @@ There is a specific list of settings that can be updated, those include:
 * @indices.recovery.file_chunk_size@, @indices.recovery.translog_ops@, @indices.recovery.translog_size@, @indices.recovery.compress@, @indices.recovery.concurrent_streams@, @indices.recovery.max_size_per_sec@.
 * @@
 
-p. Logger values can also be updated by setting @logger.@ prefix. More settings will be allowed to be updated.
+p. Logger 的值可以通过 @logger.@ prefix 设置. 还可以修改更多的设置项.
 
-p. Cluster wide settings can be returned using @curl -XGET localhost:9200/_cluster/settings@.
+p. 可以用 @curl -XGET localhost:9200/_cluster/settings@ 来查看有哪些设置项.
