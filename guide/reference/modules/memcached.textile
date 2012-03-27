@@ -1,45 +1,148 @@
 ---
 layout: guide
 title: memcached
-cat: guide
+cat: 向导
+cat_link: guide
 sidebar: reference_modules
 ---
 
-p. The memcached module allows to expose *elasticsearch* "API":/guide/reference/api over the memcached protocol (as closely as possible). 
+p. memcached模块可以让你在memcached的协议上执行 *elasticsearch* 的 "API":/guide/reference/api 
+The memcached module allows to expose *elasticsearch* "API":/guide/reference/api over the memcached protocol (as closely as possible). 
 
-p. It is provided as a plugin called @transport-memcached@ and installing is as simply as executing @plugin -install transport-memcached@ or downloading the memcached plugin and placing it under the @plugins@ directory.
+p. 使用方式很简单，只需用下载安装插件 @transport-memcached@ 
+It is provided as a plugin called @transport-memcached@ and installing is as simply as executing @plugin -install transport-memcached@ or downloading the memcached plugin and placing it under the @plugins@ directory.
 
-p. The memcached protocol supports both the binary and the text protocol, automatically detecting the correct one to use.
+p. memcached同时支持二级制和文本的通讯协议，且会自动选择判断并选择正确的协议。
+The memcached protocol supports both the binary and the text protocol, automatically detecting the correct one to use.
 
-h1. Mapping REST to Memcached Protocol
+h1. memcached协议与ES的REST接口的映射关系
+Mapping REST to Memcached Protocol
 
-p. Memcached commands are mapped to REST and handled by the same generic REST layer in elasticsearch. Here is a list of the memcached commands supported:
+p. memcached命令在elasticsearch里面是由同一个REST层来映射和处理的（并不是直接暴露memcached的接口，只是接口方式为memcached的协议），下面是一个支持的memcached命令的列表：
+Memcached commands are mapped to REST and handled by the same generic REST layer in elasticsearch. Here is a list of the memcached commands supported:
 
 h2. GET
 
-p. The memcached @GET@ command maps to a REST @GET@. The key used is the URI (with parameters). The main downside is the fact that the memcached @GET@ does not allow body in the request (and @SET@ does not allow to return a result...). For this reason, most REST APIs (like search) allow to accept the "source" as a URI parameter as well.
+p. memcached的 @GET@ 命令对应于REST里面的 @GET@。使用URI作为key（注：包含参数的url），因为memcached协议的GET约定get的时候，只能传递一个key的参数，所以在http对应的get或者post里面，如果要传递body参数是不能用的，但是这里我们有一个办法，es支持通过参数"source"来传递body的内容。
+The memcached @GET@ command maps to a REST @GET@. The key used is the URI (with parameters). The main downside is the fact that the memcached @GET@ does not allow body in the request (and @SET@ does not allow to return a result...). For this reason, most REST APIs (like search) allow to accept the "source" as a URI parameter as well.
 
 h2. SET
 
-p. The memcached @SET@ command maps to a REST @POST@. The key used is the URI (with parameters), and the body maps to the REST body.
+p. memcached @SET@ 与REST  @POST@ 对应，key值就是url（包含参数），body（value）对应于REST的body。
+The memcached @SET@ command maps to a REST @POST@. The key used is the URI (with parameters), and the body maps to the REST body.
 
 h2. DELETE
 
-p. The memcached @DELETE@ command maps to a REST @DELETE@. The key used is the URI (with parameters).
+p. memcached @DELETE@ 协议与REST @DELETE@对应，key就是URI（包含参数）。
+The memcached @DELETE@ command maps to a REST @DELETE@. The key used is the URI (with parameters).
 
 h2. QUIT
 
-p. The memcached @QUIT@ command is supported and disconnects the client.
+p.  @QUIT@ 支持用来断开与服务器的连接
+The memcached @QUIT@ command is supported and disconnects the client.
 
 h1. Settings
 
-p. The following are the settings the can be configured for memcached:
+p. 有如下对应的设置可配。
+The following are the settings the can be configured for memcached:
 
 |_. Setting |_. Description |
 |@memcached.port@|A bind port range. Defaults to @11211-11311@.|
 
-p. It also shares the uses the common "network settings":network.html.
+p. 该组件共享设置 "network settings":network.html
+It also shares the uses the common "network settings":network.html.
 
 h1. Disable memcached
 
-p. The memcached module can be completely disabled and not started using by setting @memcached.enabled@ to @false@. By default it is enabled once it is detected as a plugin.
+p. memcached模块可以通过设置参数 @memcached.enabled@ 为 @false@ 来完全停用，默认检测到有插件就启用。
+The memcached module can be completely disabled and not started using by setting @memcached.enabled@ to @false@. By default it is enabled once it is detected as a plugin.
+
+
+
+-------------------实战补充-------------------------------------
+1.插件安装,默认memcached插件开启端口11211
+<pre>
+cd bin
+./plugin install elasticsearch/elasticsearch-transport-memcached/1.1.0
+./elasticsearch
+</pre>
+
+2.来个hello world，获取下es版本信息
+<pre>
+Xshell:\> telnet localhost 11211
+
+Looking up host 'localhost'...
+Host 'localhost' resolved to 127.0.0.1.
+Connecting to 127.0.0.1:11211...
+Connection established.
+Escape character is '^@]'.
+get /
+VALUE / 0 180
+{
+  "ok" : true,
+  "status" : 200,
+  "name" : "Rhiannon",
+  "version" : {
+    "number" : "0.19.0",
+    "snapshot_build" : false
+  },
+  "tagline" : "You Know, for Search"
+}
+END
+</pre>
+
+3.索引测试文档，注意body内容需要urlencode一下的。
+如：
+<pre>{"name":"medcl"}</pre>
+urlencode之后为：
+<pre>
+%7b%22name%22%3a%22medcl%22%7d
+</pre>
+
+<pre>
+set /index/type/2 %7b%22name%22%3a%22medcl%22%7d
+
+Connection closed by foreign host.
+
+set index/type/2 {"name":"medcl"}
+
+Connection closed by foreign host.
+</pre>
+
+服务器异常了，已提交 "issue2":https://github.com/elasticsearch/elasticsearch-transport-memcached/issues/2 ,等待更新。
+<pre>
+[2012-03-27 10:53:52,229][ERROR][memcached.netty          ] caught exception on
+memcached decoder
+</pre>
+
+4.获取索引文档
+<pre>
+get /index/type/1
+VALUE /index/type/1 0 100
+{"_index":"index","_type":"type","_id":"1","_version":1,"exists":true, "_source" : {"name":"medcl"}}
+END
+</pre>
+
+5.查询索引
+<pre>
+get /index/_search?q=name:medcl
+VALUE /index/_search?q=name:medcl 0 223
+{"took":124,"timed_out":false,"_shards":{"total":2,"successful":2,"failed":0},"hits":{"total":1,"max_score":0.30685282,"hits":[{"_index":"index","_type":"type","_id":"1","_score":0.30685282, "_source" : {"name":"medcl"}}]}}
+END
+</pre>
+QueryDSL方式，查询（注意：需要去掉换行符）
+<pre>
+{    "query": {        "bool": {            "should": [                {                    "match_all": {}                }            ]        }    },    "from": 0,    "size": 10}
+</pre>
+urlencode之后
+<pre>
+%7b++++%22query%22%3a+%7b++++++++%22bool%22%3a+%7b++++++++++++%22should%22%3a+%5b++++++++++++++++++++++++++%7b++++++++++++++++++++%22match_all%22%3a+%7b%7d++++++++++++++++%7d++++++++++++%5d++++++++%7d++++%7d%2c++++%22from%22%3a+0%2c++++%22size%22%3a+10%7d
+</pre>
+
+telnet之后执行结果：
+<pre>
+get /index/_search?source=%7b++++%22query%22%3a+%7b++++++++%22bool%22%3a+%7b++++++++++++%22should%22%3a+%5b++++++++++++++++++++++++++%7b++++++++++++++++++++%22match_all%22%3a+%7b%7d+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++%7d++++++++++++%5d++++++++%7d++++%7d%2c++++%22from%22%3a+0%2c++++%22size%22%3a+10%7d
+VALUE /index/_search?source=%7b++++%22query%22%3a+%7b++++++++%22bool%22%3a+%7b++++++++++++%22should%22%3a+%5b++++++++++++++++++++++++++%7b++++++++++++++++++++%22match_all%22%3a+%7b%7d+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++%7d++++++++++++%5d++++++++%7d++++%7d%2c++++%22from%22%3a+0%2c++++%22size%22%3a+10%7d 0 207
+{"took":3,"timed_out":false,"_shards":{"total":2,"successful":2,"failed":0},"hits":{"total":1,"max_score":1.0,"hits":[{"_index":"index","_type":"type","_id":"1","_score":1.0, "_source" : {"name":"medcl"}}]}}
+END
+</pre>

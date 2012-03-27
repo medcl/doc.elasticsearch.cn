@@ -26,7 +26,7 @@ h1. Query And Fetch
 p. 参数值： *query_and_fetch*
 Parameter value: *query_and_fetch*.
 
-p. 最朴素的实现方式（也行是最快的），简单的在所有相关的shard上执行，然后返回结果，每个shard都返回 @size@ 个结果，因为每个shard都返回了 @size@ 个数目的结果，所有最终返回给调用者的结果数为：@size@ X @number of shards@ (返回结果大小乘以碎片数，没错，如果5个碎片，size为10，那么查询返回最多为50个，而不是10个)
+p. 最朴素的实现方式（也行是最快的），简单的在所有相关的shard上执行，然后返回结果，每个shard都返回 @size@ 个结果，因为每个shard都返回了 @size@ 个数目的结果，所有最终返回给调用者的结果数为 @size@ X @number of shards@ (返回结果大小乘以碎片数，没错，如果5个碎片，size为10，那么查询返回最多为50个，而不是10个)
 The most naive (and possibly fastest) implementation is to simply execute the query on all relevant shards and return the results. Each shard returns @size@ results. Since each shard already returns @size@ hits, this type actually returns @size@ times @number of shards@ results back to the caller.
 
 举例如下： http://localhost:9200/index/_search?q=*&search_type=query_and_fetch
