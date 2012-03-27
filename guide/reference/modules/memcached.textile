@@ -23,7 +23,7 @@ Memcached commands are mapped to REST and handled by the same generic REST layer
 
 h2. GET
 
-p. memcached的 @GET@ 命令对应于REST里面的 @GET@。使用URI作为key（注：包含参数的url），因为memcached协议的GET约定get的时候，只能传递一个key的参数，所以在http对应的get或者post里面，如果要传递body参数是不能用的，但是这里我们有一个办法，es支持通过参数"source"来传递body的内容。
+p. memcached的 @GET@ 命令对应于REST里面的 @GET@ 。使用URI作为key（注：包含参数的url），因为memcached协议的GET约定get的时候，只能传递一个key的参数，所以在http对应的get或者post里面，如果要传递body参数是不能用的，但是这里我们有一个办法，es支持通过参数"source"来传递body的内容。
 The memcached @GET@ command maps to a REST @GET@. The key used is the URI (with parameters). The main downside is the fact that the memcached @GET@ does not allow body in the request (and @SET@ does not allow to return a result...). For this reason, most REST APIs (like search) allow to accept the "source" as a URI parameter as well.
 
 h2. SET
@@ -33,7 +33,7 @@ The memcached @SET@ command maps to a REST @POST@. The key used is the URI (with
 
 h2. DELETE
 
-p. memcached @DELETE@ 协议与REST @DELETE@对应，key就是URI（包含参数）。
+p. memcached @DELETE@ 协议与REST @DELETE@ 对应，key就是URI（包含参数）。
 The memcached @DELETE@ command maps to a REST @DELETE@. The key used is the URI (with parameters).
 
 h2. QUIT
