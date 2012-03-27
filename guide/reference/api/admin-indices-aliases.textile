@@ -1,13 +1,13 @@
 ---
 layout: guide
-title: Index Aliases API
+title: 索引别名 API
 cat: guide
 sidebar: reference_api
 ---
 
-p. APIs in elasticsearch accept an index name when working against a specific index, and several indices when applicable. The index aliases API allow to alias an index with a name, with all APIs automatically converting the alias name to the actual index name. An alias can also be mapped to more than one index, and when specifying it, the alias will automatically expand to the aliases indices. An alias can also be associated with a filter that will automatically be applied when searching, and a routing values. 
+p. elasticsearch 中的 API 在处理某个或某几个索引时可以接受索引名。索引别名API可以对索引命名，其它API会自动将别名转换成真正的索引。一个别名也可以对应多个索引，在定义时，别名会自动扩展其名下的索引列表。别名也可以关联到filter，在搜索时会自动转换。别名也可以和路由值关联。 
 
-p. Here is a sample of associating the alias @alias1@ with index @test1@:
+p. 下面是为索引 @test1@ 创建别名 @alias1@ 的例子 :
 
 <pre class="prettyprint">
 curl -XPOST 'http://localhost:9200/_aliases' -d '
@@ -18,7 +18,7 @@ curl -XPOST 'http://localhost:9200/_aliases' -d '
 }'
 </pre>
 
-p. An alias can also be removed, for example:
+p. 别名也可以去掉, 比如:
 
 <pre class="prettyprint">
 curl -XPOST 'http://localhost:9200/_aliases' -d '
@@ -29,7 +29,7 @@ curl -XPOST 'http://localhost:9200/_aliases' -d '
 }'
 </pre>
 
-p. Renaming an index is a simple @remove@ then @add@ operation within the same API:
+p. 索引的重命名就是在同一个APi中先 @remove@ 之后再 @add@ :
 
 <pre class="prettyprint">
 curl -XPOST 'http://localhost:9200/_aliases' -d '
@@ -41,7 +41,7 @@ curl -XPOST 'http://localhost:9200/_aliases' -d '
 }'
 </pre>
 
-p. Associating an alias with more then one index are simply several @add@ actions:
+p. 将别名对应到多个索引就是执行多个 @add@ 动作:
 
 <pre class="prettyprint">
 curl -XPOST 'http://localhost:9200/_aliases' -d '
@@ -53,11 +53,11 @@ curl -XPOST 'http://localhost:9200/_aliases' -d '
 }'
 </pre>
 
-p. It is an error to index to an alias which points to more than one index.
+p. 为指向多个索引的别名创建索引是错误的。
 
-h2. Filtered Aliases
+h2. 别名过滤
 
-p. Aliases with filters provide an easy way to create different "views" of the same index. The filter can be defined using Query DSL and is applied to all Search, Count, Delete By Query and More Like This operations with this alias. Here is an example:
+p. 带有filters的别名可以很容易的实现同一索引的不同“视图”。filter可以用Query DSL定义，并且适用于该别名的所有查询、计数、删除查询结果集等操作。比如:
 
 <pre class="prettyprint">
 curl -XPOST 'http://localhost:9200/_aliases' -d '
@@ -74,11 +74,11 @@ curl -XPOST 'http://localhost:9200/_aliases' -d '
 }'
 </pre>
 
-h2. Routing
+h2. 路由
 
-p. Allow to associate routing values with aliases. This feature can be used together with filtering aliases in order to avoid unnecessary shard operations.
+p. 路由值也可以关联到别名。这个特性可以和filtering 别名共同使用，以避免非必要的shard操作。
 
-p. The following command creates a new alias @alias1@ that points to index @test@. After @alias1@ is created, all operations with this alias are automatically modified to use value @1@ for routing:
+p. 下面的命令创建了指向索引 @test@ 的新别名 @alias1@ 。在 @alias1@ 创建成功后, 所有与该别名有关的操作都自动使用路由 @1@ :
 
 <pre class="prettyprint">
 curl -XPOST 'http://localhost:9200/_aliases' -d '
@@ -95,7 +95,7 @@ curl -XPOST 'http://localhost:9200/_aliases' -d '
 }'
 </pre>
 
-p. It’s also possible to specify different routing values for searching and indexing operations:
+p. 也可以针对查询和索引操作指定不同的路由:
 
 <pre class="prettyprint">
 curl -XPOST 'http://localhost:9200/_aliases' -d '
@@ -113,17 +113,17 @@ curl -XPOST 'http://localhost:9200/_aliases' -d '
 }'
 </pre>
 
-p. As shown in the example above, search routing may contain several values separated by comma. Index routing can contain only a single value.
+p. 如上例所示, 搜索路由可包括多个，有逗号分隔。索引路由必须唯一。
 
-p. If an operation that uses routing alias also has a routing parameter, an intersection of both alias routing and routing specified in the parameter is used. For example the following command will use "2" as a routing value:
+p. 如果操作中既有路由别名也有路由参数，会使用它们的交集。比如下例中会用 "2" 作为路由值:
 
 <pre class="prettyprint">
 curl -XGET 'http://localhost:9200/alias2/_search?q=user:kimchy&routing=2,3'
 </pre>
 
-h2. Retrieving existing aliases
+h2. 获取现有别名
 
-p. Aliases can be retrieved using the get aliases API, which can either return all indices with all aliases, or just for specific indices:
+p. 可以通过get API 获取现有的别名, 既可以查询所有索引对应的全部别名，也可以查询特定索引对应的别名:
 
 <pre class="prettyprint">
 curl -XGET 'localhost:9200/test/_aliases'
