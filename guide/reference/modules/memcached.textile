@@ -146,3 +146,9 @@ VALUE /index/_search?source=%7b++++%22query%22%3a+%7b++++++++%22bool%22%3a+%7b++
 {"took":3,"timed_out":false,"_shards":{"total":2,"successful":2,"failed":0},"hits":{"total":1,"max_score":1.0,"hits":[{"_index":"index","_type":"type","_id":"1","_score":1.0, "_source" : {"name":"medcl"}}]}}
 END
 </pre>
+
+6.删除索引文档
+<pre>
+delete /index/type/1
+DELETED
+</pre>
