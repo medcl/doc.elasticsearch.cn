@@ -1,35 +1,33 @@
 ---
 layout: guide
-title: Analyze API
+title: 分析 API
 cat: guide
 sidebar: reference_api
 ---
 
-p. Performs the analysis process on a text and return the tokens breakdown of the text. Here is an example:
+p. 对文本进行分析，并返回切分的词汇。请见下例：
 
 <pre class="prettyprint">
 curl -XGET 'localhost:9200/test/_analyze?text=this+is+a+test'
 </pre>
 
-p. The above will run an analysis on the "this is a test" text, using the default index analyzer associated with the @test@ index. An @analyzer@ can also be provided to use a different analyzer:
+p. 上述命令会返回对 "this is a test" 的分析, 使用的是与索引@test@关联的默认分析器。 可以用 @analyzer@ 指定特定的分析器:
 
 <pre class="prettyprint">
 curl -XGET 'localhost:9200/test/_analyze?analyzer=whitespace' -d 'this is a test'
 </pre>
 
-p. Also, the analyzer can be derived based on a field mapping, for example:
+p. 此外, 也可以基于域映射获取分析器，比如：
 
 <pre class="prettyprint">
 curl -XGET 'localhost:9200/test/_analyze?field=obj1.field1' -d 'this is a test'
 </pre>
 
-p. Will cause the analysis to happen based on the analyzer configure in the mapping for @obj1.field1@ (and if not, the default index analyzer).
+p. 会使用映射到@obj1.field1@的分析器进行文本分析 (如果没有的话,就用默认的索引分析器).
 
 
-p. Also, the text can be provided as part of the request body, and not as a parameter.
+p. 另外, 文本也可以作为 request body的一部分，并不一定非要是参数。
 
-h2. Format
+h2. 格式
 
-p. By default, the format the tokens are returned in are in json and its called @detailed@. The @text@ format value provides the analyzed data in a text stream that is a bit more readable.
-
-
+p. 默认情况下，词汇是以json格式返回的，其名称为 @detailed@.  在文本流中 用 @text@ 格式的值是的分析数据更易读.
