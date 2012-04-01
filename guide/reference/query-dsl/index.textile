@@ -6,7 +6,7 @@ cat_link: guide
 sidebar: 帮助文档_query_dsl
 ---
 
-p. *elasticsearch* 提供基于JSON的完整的Query DSL查询表达式. 一般来说, 普通的查询如 "term(项查询)":term-query.html 或者 "prefix(前缀查询)":prefix-query.html. 另外还有混合查询如 "bool(布尔查询)":bool-query.html 等. 另外查询表达式(Queries)还能够关联特定的过滤表达式，如 "filtered":filtered-query.html 或者 "constant_score":constant-score-query.html 查询. 
+p. *elasticsearch* 提供基于JSON的完整的Query DSL查询表达式(DSL即领域专用语言). 一般来说, 普通的查询如 "term(项查询)":term-query.html 或者 "prefix(前缀查询)":prefix-query.html. 另外还有混合查询如 "bool(布尔查询)":bool-query.html 等. 另外查询表达式(Queries)还能够关联特定的过滤表达式，如 "filtered":filtered-query.html 或者 "constant_score":constant-score-query.html 查询. 
 
 p. 你可以把Query DSL当作是一系列的抽象的查询表达式树（ "AST":http://en.wikipedia.org/wiki/Abstract_syntax_tree ）. 特定查询能够包含其它的查询，(如 "bool(布尔查询)":bool-query.html ), 有些查询能够包含过滤器(如 "constant_score":constant-score-query.html), 还有的可以同时包含查询和过滤器 (如 "filtered":filtered-query.html). 都能够从ES支持查询集合里面选择任意一个查询或者是从过滤器集合里面挑选出任意一个过滤器, 这样的话，我们就可以构造出任意复杂（maybe 非常有趣）的查询了，是不是很灵活啊.
 
