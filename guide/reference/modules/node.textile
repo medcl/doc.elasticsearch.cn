@@ -1,7 +1,8 @@
 ---
 layout: guide
 title: Node
-cat: guide
+cat: 向导
+cat_link: guide
 sidebar: reference_modules
 ---
 
