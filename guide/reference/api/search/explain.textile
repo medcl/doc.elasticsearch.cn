@@ -6,7 +6,7 @@ cat_link: guide
 sidebar: reference_api_search
 ---
 
-p. Enables explanation for each hit on how its score was computed. 启用解释器用以分析每条记录的分数是如何计算的。
+p. 启用解释器，以分析每次命中的分数是如何计算的。
 
 <pre class="prettyprint lang-js">
 {
