@@ -30,7 +30,7 @@ curl -XPUT 'http://localhost:5984/my_couch_db'
 
 <pre class="prettyprint">
 cd /path/to/elasticsearch/
-./bin/plugin -install river-couchdb
+bin/plugin -install elasticsearch/elasticsearch-river-couchdb/1.1.0
 </pre>
 
 * Configure ElasticSearch to start indexing
