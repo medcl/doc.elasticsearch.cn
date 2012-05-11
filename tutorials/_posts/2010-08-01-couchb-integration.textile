@@ -49,6 +49,8 @@ curl -XPUT 'http://elasticsearch-host:9200/_river/my_es_idx/_meta' -d '{
 
 **Note** : The 'elasticsearch' river index that you are creating (named **my_es_idx**) can be named anything.
 It is only for internal use by ElasticSearch.
+my_es_idx : the NAME of a river
+https://github.com/goog/doc.elasticsearch.cn/blob/master/guide/reference/river/index.textile
 
 That's it. We are ready to go. At this point, what we have is:
 
