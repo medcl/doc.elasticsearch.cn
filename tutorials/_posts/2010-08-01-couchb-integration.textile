@@ -23,14 +23,14 @@ h1. Quick Steps
 * Create a CouchDB database (named my_couch_db) for indexing (or use an existing one)
 
 <pre class="prettyprint">
-curl -XPUT 'http://couchdb-host:5984/my_couch_db
+curl -XPUT 'http://localhost:5984/my_couch_db'
 </pre>
 
 * Enable the couchdb-river plugin in ElasticSearch
 
 <pre class="prettyprint">
 cd /path/to/elasticsearch/
-./bin/plugin -install river-couchdb
+bin/plugin -install elasticsearch/elasticsearch-river-couchdb/1.1.0
 </pre>
 
 * Configure ElasticSearch to start indexing
