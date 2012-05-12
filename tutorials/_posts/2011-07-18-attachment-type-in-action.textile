@@ -45,7 +45,7 @@ curl -X PUT "localhost:9200/test" -d '{
 }'
 </pre>
 
-Before we can use the attachments plugin we need to create correct mapping for the attachment type.
+NOTICE:Before we can use the attachments plugin we need to create correct mapping for the attachment type.
 
 <pre class="prettyprint">
 curl -X PUT "localhost:9200/test/attachment/_mapping" -d '{
