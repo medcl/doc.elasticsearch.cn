@@ -78,7 +78,7 @@ p. meta data 和 实际的内容基本都是type mappers (string, date, ...), �
 "person"  为mapping type ,  "file" 为document的Key, 所以文件被 @attachment@ type 解析
 p. In the above example, the actual content indexed is mapped under @fields@ name @file@, and we decide not to index it, so it will only be available in the @_all@ field. The other fields map to their respective metadata names, but there is no need to specify the @type@ (like @string@ or @date@) since it is already known. 
 
-p.  @date@ 域会map 为string类型
+p.  @date@ 域 已经暴露了自己的string类型身份
 
 
 p. The plugin uses "Apache Tika":http://lucene.apache.org/tika/ to parse attachments, so many formats are supported, listed "here":http://lucene.apache.org/tika/0.8/formats.html.
