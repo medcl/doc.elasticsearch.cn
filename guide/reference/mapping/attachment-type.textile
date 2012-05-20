@@ -4,14 +4,20 @@ title: Attachment Type
 cat: guide
 sidebar: reference_mapping
 ---
+附件类型
 
-p. The @attachment@ type allows to index different "attachment" type field (encoded as @base64@), for example, microsoft office formats, open document formats, ePub, HTML, and so on (full list can be found "here":http://lucene.apache.org/tika/0.9/formats.html).
+p. The @attachment@ type allows to index different "attachment" type field (encoded as @base64@), for example, microsoft office formats, ODF, ePub, HTML, and so on (full list can be found "here":http://lucene.apache.org/tika/0.9/formats.html).
+
+note："attachment" 编码为 @base64@ ,
 
 p. The @attachment@ type is provided as a plugin extension. The plugin is a simple zip file that can be downloaded and placed under @$ES_HOME/plugins@ location. It will be automatically detected and the @attachment@ type will be added.
+click：  https://github.com/goog/doc.elasticsearch.cn/blob/master/tutorials/_posts/2011-07-18-attachment-type-in-action.textile
 
-p. Note, the @attachment@ type is experimental.
+p. Note, the @attachment@ type is experimental(试验性的).
 
 p. Using the attachment type is simple, in your mapping JSON, simply set a certain JSON element as attachment, for example:
+
+p. 使用attachment type 很简单, 在mapping JSON里面简单的设置一个JSON元素为attachment类型, 例如:
 
 <pre class="prettyprint lang-js">
 {
@@ -33,6 +39,7 @@ p. In this case, the JSON to index can be:
 
 p. Or it is possible to use more elaborated JSON if content type or resource name need to be set explicitly:
 
+p. 如果内容类型或资源名称需要设置清楚，可能需要稍微一点复杂的JSON 
 <pre class="prettyprint lang-js">
 {
     "my_attachment" : {
@@ -45,7 +52,12 @@ p. Or it is possible to use more elaborated JSON if content type or resource nam
 
 p. The @attachment@ type not only indexes the content of the doc, but also automatically adds meta data on the attachment as well (when available). The metadata supported are: @date@, @title@, @author@, and @keywords@. They can be queried using the "dot notation", for example: @my_attachment.author@.
 
+The @attachment@ type 会自动添加元数据，支持的元数据有: @date@, @title@, @author@, and @keywords@. 可能还不够用...
+
 p. Both the meta data and the actual content are simple core type mappers (string, date, ...), thus, they can be controlled in the mappings. For example:
+
+
+p. meta data 和 实际的内容基本都是type mappers (string, date, ...), 因此可以在 mappings里面设置. 例如:
 
 <pre class="prettyprint lang-js">
 {
@@ -63,7 +75,10 @@ p. Both the meta data and the actual content are simple core type mappers (strin
     }
 }
 </pre>
+"person"  为mapping type ,  "file" 为document的Key, 所以文件被 @attachment@ type 解析
+p. In the above example, the actual content indexed is mapped under @fields@ name @file@, and we decide not to index it, so it will only be available in the @_all@ field. The other fields map to their respective metadata names, but there is no need to specify the @type@ (like @string@ or @date@) since it is already known. 
 
-p. In the above example, the actual content indexed is mapped under @fields@ name @file@, and we decide not to index it, so it will only be available in the @_all@ field. The other fields map to their respective metadata names, but there is no need to specify the @type@ (like @string@ or @date@) since it is already known.
+p.  @date@ 域 已经暴露了自己的string类型身份
+
 
 p. The plugin uses "Apache Tika":http://lucene.apache.org/tika/ to parse attachments, so many formats are supported, listed "here":http://lucene.apache.org/tika/0.8/formats.html.
