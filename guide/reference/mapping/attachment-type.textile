@@ -39,7 +39,7 @@ p. In this case, the JSON to index can be:
 
 p. Or it is possible to use more elaborated JSON if content type or resource name need to be set explicitly:
 
-p. 如果内容类型或资源名称需要设置清楚，可能需要很复杂的 JSON 
+p. 如果内容类型或资源名称需要设置清楚，可能需要稍微一点复杂的JSON 
 <pre class="prettyprint lang-js">
 {
     "my_attachment" : {
