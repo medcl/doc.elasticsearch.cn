@@ -24,6 +24,6 @@ p. Mapping Meta用json对mapping进行描述，在mapping definition信息中可
 </pre>
 
 p. Meta can be handy for example for client libraries that perform serialization and deserialization to store its meta model (for example, the class the document maps to).
-p. Meta是为了方便 如客户端工具进行序列化、去序列存储mapping的元数据模型(例如, 文档map到的那个类).
+p. Meta是为了方便 如客户端工具进行序列化、去序列存储mapping的元数据模型(例如, 文档map到的那个类).  ？？还不是很理解
 
 
