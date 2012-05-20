@@ -4,8 +4,11 @@ title: Meta
 cat: guide
 sidebar: reference_mapping
 ---
+mapping元数据
 
 p. Each mapping can have custom meta data associated with it. These are simple storage elements that are simply persisted along with the mapping and can be retrieved when fetching the mapping definition. The meta is defined under the @_meta@ element, for example:
+
+p. Mapping Meta用json对mapping进行描述，在mapping definition信息中可以查询到
 
 <pre class="prettyprint lang-js">
 {
@@ -21,4 +24,5 @@ p. Each mapping can have custom meta data associated with it. These are simple s
 </pre>
 
 p. Meta can be handy for example for client libraries that perform serialization and deserialization to store its meta model (for example, the class the document maps to).
+p. Meta是为了方便 如客户端工具进行序列化、去序列存储mapping的元数据模型(例如, 文档map到的那个类).  ？？还不是很理解
 
