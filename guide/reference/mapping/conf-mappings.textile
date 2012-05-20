@@ -16,4 +16,4 @@ p. Mapping也可以在节点上配置，就是说 ES自动地使用指定位置�
 
 p. Mappings can be defined within files called @[mapping_name].json@ and be placed either under @config/mappings/_default@ location, or under @config/mappings/[index_name]@ (for mappings that should be associated only with a specific index).
 
-p. Mappings 以 @[mapping_name].json@ 形式存在， 存放在 @config/mappings/_default@  或  @config/mappings/[index_name]@ (针对特定的index).
+p. Mappings 以 @[mapping_name].json@ 形式存在，文件存放在 @config/mappings/_default@  或  @config/mappings/[index_name]@ (针对特定的index).
