@@ -4,7 +4,7 @@ title: Config Mappings
 cat: guide
 sidebar: reference_mapping
 ---
-配置mapping
+配置Mappings
 
 p. Creating new mappings can be done using the @put_mapping@ API. When a document is indexed with no mapping associated with it in the specific index, the "dynamic / default mapping":dynamic-mapping.html feature will kick in an automatically create mapping definition for it.
 
