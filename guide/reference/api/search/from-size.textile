@@ -5,7 +5,9 @@ cat: guide
 sidebar: reference_api_search
 ---
 
-p. Though can be set as request parameters, they can also be set within the search body. @from@ defaults to @0@, and @size@ defaults to @10@.
+p. Though can be set as request parameters,
+
+*they can also be set within the search body.*  @from@ defaults to @0@, and @size@ defaults to @10@.
 
 <pre class="prettyprint lang-js">
 {
