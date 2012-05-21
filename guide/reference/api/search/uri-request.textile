@@ -4,8 +4,8 @@ title: Search API - URI Request
 cat: guide
 sidebar: reference_api_search
 ---
-*request parameters*
-重要的概念
+**request parameters**
+--重要的概念--
 p. A search request can be executed purely using a URI by providing request parameters. Not all search options are exposed when executing a search using this mode, but it can be handy for quick "curl tests". Here is an example:
 
 <pre class="prettyprint">
