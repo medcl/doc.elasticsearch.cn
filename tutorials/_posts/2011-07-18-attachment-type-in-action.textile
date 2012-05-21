@@ -14,7 +14,7 @@ h1. Installation
 First we need to install the attachments plugin. Navigate to @ES_HOME@ and execute the following from the command line:
 
 <pre class="prettyprint">
-./bin/plugin install mapper-attachments
+bin/plugin -install elasticsearch/elasticsearch-mapper-attachments/1.4.0
 </pre>
 
 This will download the attachments plugin from "plugins repository":http://elasticsearch.googlecode.com/svn/plugins/ and install it into @ES_HOME/plugins/mapper-attachments/@ folder.
@@ -45,7 +45,7 @@ curl -X PUT "localhost:9200/test" -d '{
 }'
 </pre>
 
-Before we can use the attachments plugin we need to create correct mapping for the attachment type.
+NOTICE: Before we can use the attachments plugin we need to create correct mapping for the attachment type.
 
 <pre class="prettyprint">
 curl -X PUT "localhost:9200/test/attachment/_mapping" -d '{
