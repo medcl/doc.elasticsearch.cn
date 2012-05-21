@@ -8,6 +8,7 @@ sidebar: reference_api_search
 --重要的概念--
 
 p. A search request can be executed purely using a URI by providing request parameters. Not all search options are exposed when executing a search using this mode, but it can be handy for quick "curl tests". Here is an example:
+p. 不是所有搜索选项，用于curl test
 
 <pre class="prettyprint">
 $ curl -XGET 'http://localhost:9200/twitter/tweet/_search?q=user:kimchy'
