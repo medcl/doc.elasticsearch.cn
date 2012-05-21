@@ -61,5 +61,5 @@ p. The parameters allowed in the URI are:
 |size| The number of hits to return. Defaults to @10@. |
 |search_type| The type of the search operation to perform. Can be @dfs_query_then_fetch@, @dfs_query_and_fetch@, @query_then_fetch@, @query_and_fetch@. Defaults to @query_then_fetch@. |
 |lowercase_expanded_terms|Should terms be automatically lowercased or not. Defaults to @true@.|
-|analyze_wildcard|Should wildcard and prefix queries be analyzed or not. Defaults to @false@.|
+|analyze_wildcard|Should wildcard and prefix queries be analyzed or not. Defaults to @false@. 通配符&前缀|
 
