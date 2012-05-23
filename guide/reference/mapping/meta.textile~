@@ -8,11 +8,7 @@ mapping元数据
 
 p. Each mapping can have custom meta data associated with it. These are simple storage elements that are simply persisted along with the mapping and can be retrieved when fetching the mapping definition. The meta is defined under the @_meta@ element, for example:
 
-<<<<<<< HEAD
 p. Mapping Meta用json对mapping进行描述，在mapping definition信息中可以查询到
-=======
-p. 每个mapping里面都可以包含你的自定义的metadata(元数据），这些信息简单的以一个元素的方式存储在es的mapping里面，同样通过mapping的获取接口，你可以再次拿回这些meta data信息，这些元数据信息定义在 @_meta@ 元素下面，例如：
->>>>>>> upstream/master
 
 <pre class="prettyprint lang-js">
 {
@@ -30,6 +26,4 @@ p. 每个mapping里面都可以包含你的自定义的metadata(元数据），�
 p. Meta can be handy for example for client libraries that perform serialization and deserialization to store its meta model (for example, the class the document maps to).
 p. Meta是为了方便 如客户端工具进行序列化、去序列存储mapping的元数据模型(例如, 文档map到的那个类).  ？？还不是很理解
 
-
-p. Meta可以很方便的被客户端序列化和反序列化，用来存储其元模型（Meta Model）。
 

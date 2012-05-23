@@ -1,18 +1,19 @@
 ---
 layout: guide
 title: Index Modules
-cat: guide
+cat: 向导
+cat_link: guide
 sidebar: reference_index_modules
 ---
 
-p. Index Modules are modules created per index and control all aspects related to an index. Since those modules lifecycle are tied to an index, all the relevant modules settings can be provided when creating an index (and it is actually the recommended way to configure an index).
+p. 索引模块是用来控制每个索引各方面的一个模块，因为这些模块的整个生命周期都是和索引绑定在一起的，所以相关的模块设置可以在创建索引的时候来进行设置（并且事实上也是强烈建议在创建索引的时候就做好相应的配置）.
 
-h1. Index Settings
+h1. 索引设置
 
-p. There are specific index level settings that are not associated with any specific module. These include:
+p. 这里有一些索引级别的与其他模块不相关的一些设置，如下:
 
 |_. Setting |_. Description |
-|index.compound_format|Should the compound file format be used (boolean setting). If not set, controlled by the actually store used, this is because the compound format was created to reduce the number of open file handles when using file based storage. By default, it is set to @false@ for better performance (really applicable for file system based index storage), but, requires adapting the max open file handles.|
-|index.term_index_interval|Set the interval between indexed terms.  Large values cause less memory to be used by a reader / searcher, but slow random-access to terms. Small values cause more memory to be used by a reader / searcher, and speed random-access to terms. Defaults to @128@.|
-|index.term_index_divisor|Subsamples which indexed terms are loaded into RAM. This has the same effect as @index.term_index_interval@ except that setting must be done at indexing time while this setting can be set per reader / searcher.  When set to N, then one in every N*termIndexInterval terms in the index is loaded into memory.  By setting this to a value > 1 you can reduce memory usage, at the expense of higher latency when loading a TermInfo.  The default value is 1.  Set this to -1 to skip loading the terms index entirely.|
-|index.refresh_interval|A time setting controlling how often the refresh operation will be executed. Defaults to @1s@. Can be set to @-1@ in order to disable it.|
+|index.compound_format|索引的文件格式是否使用混合模式，如果没有设置，由实际使用的存储来控制，因为当使用文件系统来存储的时候,使用混合模式的索引格式，可以用来减少打开文件的句柄数，默认设置为@false@ 保证更好的性能（当使用文件系统的索引存储确实非常合适，不过需要调整最大打开文件数。（Should the compound file format be used (boolean setting). If not set, controlled by the actually store used, this is because the compound format was created to reduce the number of open file handles when using file based storage. By default, it is set to @false@ for better performance (really applicable for file system based index storage), but, requires adapting the max open file handles.）|
+|index.term_index_interval|设置词条间距，设置的值越大，reader/searcher可使用的内存就越小，同时访问词的随机存取就会慢，值越小，reader/searcher使用更多内存，访问词的速度就会提高，默认值为 @128@ （Set the interval between indexed terms.  Large values cause less memory to be used by a reader / searcher, but slow random-access to terms. Small values cause more memory to be used by a reader / searcher, and speed random-access to terms. Defaults to @128@.）|
+|index.term_index_divisor|那些词会被二次抽样加载到内存，使用效果和 @index.term_index_interval@ 一样，只不过后者的设置必须在索引之前进行设置，而这个可以是按读或搜索来分别进行设置，当设置为N，那么索引里面的 N*termIndexInterval个词则会加载到内存，当设置的值>1,可以减少内存的使用,默认是1，设置为-1将直接跳过索引中词的加载。（Subsamples which indexed terms are loaded into RAM. This has the same effect as @index.term_index_interval@ except that setting must be done at indexing time while this setting can be set per reader / searcher.  When set to N, then one in every N*termIndexInterval terms in the index is loaded into memory.  By setting this to a value > 1 you can reduce memory usage, at the expense of higher latency when loading a TermInfo.  The default value is 1.  Set this to -1 to skip loading the terms index entirely.）|
+|index.refresh_interval|用来控制多长时间进行一次刷新操作，默认为1s，可以设置为 @-1@ 来禁用刷新（A time setting controlling how often the refresh operation will be executed. Defaults to @1s@. Can be set to @-1@ in order to disable it.）|

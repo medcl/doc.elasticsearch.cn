@@ -39,7 +39,11 @@ p. In this case, the JSON to index can be:
 
 p. Or it is possible to use more elaborated JSON if content type or resource name need to be set explicitly:
 
+<<<<<<< HEAD
+p. 如果内容类型或资源名称需要设置清楚，可能需要很复杂的 JSON 
+=======
 p. 如果内容类型或资源名称需要设置清楚，可能需要稍微一点复杂的JSON 
+>>>>>>> upstream/master
 <pre class="prettyprint lang-js">
 {
     "my_attachment" : {
@@ -78,7 +82,11 @@ p. meta data 和 实际的内容基本都是type mappers (string, date, ...), �
 "person"  为mapping type ,  "file" 为document的Key, 所以文件被 @attachment@ type 解析
 p. In the above example, the actual content indexed is mapped under @fields@ name @file@, and we decide not to index it, so it will only be available in the @_all@ field. The other fields map to their respective metadata names, but there is no need to specify the @type@ (like @string@ or @date@) since it is already known. 
 
+<<<<<<< HEAD
+p.  @date@ 域会map 为string类型
+=======
 p.  @date@ 域 已经暴露了自己的string类型身份
+>>>>>>> upstream/master
 
 
 p. The plugin uses "Apache Tika":http://lucene.apache.org/tika/ to parse attachments, so many formats are supported, listed "here":http://lucene.apache.org/tika/0.8/formats.html.
