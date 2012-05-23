@@ -52,7 +52,10 @@ h1. Parameters
 | @size@ | The number of hits to return. Defaults to @10@. |
 | @search_type@ | The type of the search operation to perform. Can be @dfs_query_then_fetch@, @dfs_query_and_fetch@, @query_then_fetch@, @query_and_fetch@. Defaults to @query_then_fetch@. |
 
+@from@  @size@  *两个变量用于分页*
 p. Out of the above, the @search_type@ is the one that can not be passed within the search request body, and in order to set it, it must be passed as a request REST parameter.
+
+p.  @search_type@ 参数不能通过search request body 传入, 必须通过一个请求RESTful参数传入.
 
 p. The rest of the search request should be passed within the body itself. The body content can also be passed as a REST parameter named @source@.
 
