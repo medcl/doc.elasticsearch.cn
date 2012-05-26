@@ -50,7 +50,7 @@ p. Script fields 可以访问 the actual @_source@ document(indexed)  ,提取特
 
 p. Note the @_source@ keyword here to navigate the json like model. 
 
-p. 注意， 这里 @_source@ 指的事 json-like model. 
+p. +注意+， 这里 @_source@ 指的事 json-like model. 
 
 p. Its important to understand the difference between @doc['my_field'].value@ and @_source.my_field@. The first, using the doc keyword, will cause the terms for that field to be loaded to memory (cached), which will result in faster execution, but more memory consumption. Also, the @doc[...]@ notation only allows for simple valued fields (can't return a json object from it) and make sense only on non analyzed or single term based fields.
 
