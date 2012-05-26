@@ -7,6 +7,8 @@ sidebar: reference_api_search
 
 p. Allows to selectively load specific fields for each document represented by a search hit. Defaults to load the internal @_source@ field.
 
+p. 选择性的载入命中文档的特定域， 默认是内部域  @_source@ 
+
 <pre class="prettyprint lang-js">
 {
     "fields" : ["user", "postDate"],
@@ -16,7 +18,7 @@ p. Allows to selectively load specific fields for each document represented by a
 }
 </pre>
 
-p. The fields will automatically load stored fields (@store@ mapping set to @yes@), or, if not stored, will load the @_source@ and extract it from it (allowing to return nested document object).
+p. The fields will automatically load stored fields (@store@ of a mapping is set to @yes@), or, if not stored, will load the @_source@ and extract it from it (allowing to return nested document object).
 
 p. @*@ can be used to load all stored fields from the document.
 
@@ -31,4 +33,7 @@ p. An empty array will cause only the @_id@ and @_type@ for each hit to be retur
 }
 </pre>
 
+p. 空数组只会返回 @_id@ and @_type@ 域.
+
 p. Script fields can also be automatically detected and used as fields, so things like @_source.obj1.obj2@ can be used, though not recommended, as @obj1.obj2@ will work as well.
+link: http://www.elasticsearch.org/guide/reference/api/search/script-fields.html
