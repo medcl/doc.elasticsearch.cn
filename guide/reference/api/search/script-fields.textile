@@ -4,8 +4,10 @@ title: Search API - Script Fields
 cat: guide
 sidebar: reference_api_search
 ---
-
+**Script Fields**
 p. Allows to return a "script evaluation":/guide/reference/modules/scripting.html (based on different fields) for each hit, for example:
+
+p. 返回脚本评价
 
 <pre class="prettyprint lang-js">
 {
@@ -28,7 +30,10 @@ p. Allows to return a "script evaluation":/guide/reference/modules/scripting.htm
 
 p. Script fields can work on fields that are not store (@my_field_name@ in the above case), and allow to return custom values to be returned (the evaluated value of the script).
 
+p. Script fields 可以着用于没有存储的域 ， 将返回自定义的值
 p. Script fields can also access the actual @_source@ document indexed and extract specific elements to be returned from it (can be an "object" type). Here is an example:
+
+p. Script fields 可以访问 the actual @_source@ document(indexed)  ,提取特定元素(包括对象)
 
 <pre class="prettyprint lang-js">
     {
@@ -45,6 +50,11 @@ p. Script fields can also access the actual @_source@ document indexed and extra
 
 p. Note the @_source@ keyword here to navigate the json like model. 
 
+p. 注意， 这里 @_source@ 指的事 json-like model. 
+
 p. Its important to understand the difference between @doc['my_field'].value@ and @_source.my_field@. The first, using the doc keyword, will cause the terms for that field to be loaded to memory (cached), which will result in faster execution, but more memory consumption. Also, the @doc[...]@ notation only allows for simple valued fields (can't return a json object from it) and make sense only on non analyzed or single term based fields.
+
+**the difference between @doc['my_field'].value@ and @_source.my_field@.**
+p.  使用doc方式会使这个域的词载入内存(cached), 缺点是耗内存； the @doc[...]@ 只能作用在简单值的域上，不能返回json对象 ，仅作用在不分词或单项的域有意义。
 
 p. The @_source@ on the other hand causes the source to be loaded, parsed, and then only the relevant part of the json is returned.
