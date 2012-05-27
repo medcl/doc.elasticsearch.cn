@@ -14,7 +14,7 @@ p. a image about the facet and the carrot [by medcl]
 
 !http://farm8.staticflickr.com/7082/7278153590_904a695f38.jpg!
 
-p. Note, this is different compared to creating a **@filtered@ query** with **the filter**, since this will cause %{color:red}the facets to only process the filtered results%.
+p. Note, this is different compared to creating a **@filtered@ query** with **the filter**, since this will cause  %{color:#0000ff}the facets to only process the filtered results %
 
 p. For example, lets create two tweets, with two different tags:
 
