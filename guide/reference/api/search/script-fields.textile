@@ -5,7 +5,8 @@ cat: guide
 sidebar: reference_api_search
 ---
 **Script Fields**
-p. Allows to return a "script evaluation":/guide/reference/modules/scripting.html (based on different fields) for each hit, for example:
+
+p. Allows to return a "script evaluation":https://github.com/goog/doc.elasticsearch.cn/blob/master/guide/reference/modules/scripting.textile (based on different fields) for each hit, for example:
 
 p. 返回脚本评价[数据加工处理]
 
