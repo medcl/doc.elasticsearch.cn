@@ -8,7 +8,7 @@ sidebar: reference_api_search
 p. When doing things like facet navigation, sometimes only the hits are needed to be filtered by the chosen facet, and all the facets should continue to be calculated based on the original query. The @filter@ element within the search request can be used to accomplish it.
 
 p.  facet navigation导航，http://www.elasticsearch.org/guide/reference/api/search/facets/
-Facets provide aggregated data . In the simplest case, a terms facet can return facet counts for various facet values for a specific field. ElasticSearch supports more facet implementations, such as statistical or date histogram facets.  有时只是hits需要被选中的facet过滤， all the facets 仍在原查询的基础上进行， The @filter@ 用于此场景。
+Facets provide aggregated data . In the simplest case, a terms facet can return facet counts for various facet values for a specific field. ElasticSearch supports more facet implementations, such as statistical or date histogram facets. 有时要针对选定的facet项去过滤命中结果， all facets仍在原查询的基础上进行， @filter@ 适用于此场景。
 
 p. a image about the facet and the carrot [by medcl]
 
