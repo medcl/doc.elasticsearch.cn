@@ -10,7 +10,7 @@ p. When doing things like facet navigation, sometimes only the hits are needed t
 p.  facet navigation导航，http://www.elasticsearch.org/guide/reference/api/search/facets/
 Facets provide aggregated data . In the simplest case, a terms facet can return facet counts for various facet values for a specific field. ElasticSearch supports more facet implementations, such as statistical or date histogram facets.
 
-<p><img src="https://github.com/goog/doc.elasticsearch.cn/blob/master/guide/reference/api/search/facet_carrot.jpg" alt="facet"/></p>
+<img src="https://github.com/goog/doc.elasticsearch.cn/blob/master/guide/reference/api/search/facet_carrot.jpg" alt="facet"/>
 
 p. Note, this is different compared to creating a @filtered@ query with the filter, since this will cause **the facets to only process the filtered results**.
 
