@@ -8,13 +8,13 @@ sidebar: reference_api_search
 p. When doing things like facet navigation, sometimes only the hits are needed to be filtered by the chosen facet, and all the facets should continue to be calculated based on the original query. The @filter@ element within the search request can be used to accomplish it.
 
 p.  facet navigation导航，http://www.elasticsearch.org/guide/reference/api/search/facets/
-Facets provide aggregated data . In the simplest case, a terms facet can return facet counts for various facet values for a specific field. ElasticSearch supports more facet implementations, such as statistical or date histogram facets.
+Facets provide aggregated data . In the simplest case, a terms facet can return facet counts for various facet values for a specific field. ElasticSearch supports more facet implementations, such as statistical or date histogram facets.  有时只是hits需要被选中的facet过滤， all the facets 仍在原查询的基础上进行， The @filter@ 用于此场景。
 
 p. a image about the facet and the carrot [by medcl]
 
 !http://farm8.staticflickr.com/7082/7278153590_904a695f38.jpg!
 
-p. Note, this is different compared to creating a @filtered@ query with the filter, since this will cause **the facets to only process the filtered results**.
+p. Note, this is different compared to creating a **@filtered@ query** with **the filter**, since this will cause %{color:red}**the facets to only process the filtered results**%.
 
 p. For example, lets create two tweets, with two different tags:
 
@@ -53,7 +53,9 @@ curl -XPOST 'localhost:9200/twitter/_search?pretty=true' -d '
 '
 </pre>
 
-p. We get two hits, and the relevant facets with a count of 1 for both @green@ and @blue@. *Now, lets say the @green@ facet is chosen, we can simply add a filter for it:*
+p. We get two hits, and the relevant facets with a count of 1 for both @green@ and @blue@. 
+
+p. *Now, lets say the @green@ facet is chosen, we can simply add a filter for it:*
 
 <pre class="prettyprint">
 curl -XPOST 'localhost:9200/twitter/_search?pretty=true' -d '
