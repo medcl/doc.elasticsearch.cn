@@ -1,0 +1,30 @@
+---
+layout: concepts 
+title: Transaction Log 
+cat: concepts
+sidebar: scaling-lucene 
+---
+
+p. As we have discussed before, commit is heavy operation but is required to make sure that the index data is persisted. If node or machine holding the index crashes before the commit we can lose the data that has been indexed since last commit.
+
+h2. Data Persistency
+
+p. This is solved by having a *transaction log* (or write ahead log) that records the fact that operation has happened on the index and there is no need to call the commit to make the data persistent. It can be more naturally supported by push replication because we can have that transaction log in all the different shards. If something crashes then that log can be easily replayed when needed.
+
+p. Transaction log is periodically flushed and you can "control":../../../reference/index-modules/translog.html that. Simply it is here to keep record of changes between two consecutive commits.
+
+p. Even if you run a single elasticsearch server (no need to be distributed) the transaction log allows for it to survive “kill -9” because we can fsync the transaction log with every change and the data is fully persistent.
+
+p. But there is more to it! Transaction log plays important part not just in making sure indexed data does not get lost, but also when doing both *shared gateway snapshot*, and when doing *peer shard recovery* (or shard "Hot" relocation).
+
+h2. Shared Gateway Snapshot
+
+p. When shared gateway is used then it periodically makes "snapshots":../../../reference/api/admin-indices-gateway-snapshot.html of changes to a shared storage and transaction log is also part of that persisted data.
+
+h2. Peer Shard Reovery
+
+p. When shard relocate from one node to another or when more shard replicas are allocated (for example if you "increase":../../../reference/api/admin-indices-update-settings.html number of replicas) then they recover from one another and not from gateway.
+
+p. When the relocation happens, we make sure that we do not delete the Lucene segment files, we disable flushing, we do not call commit and we start to transfer these segment files, and we only store the changes into transaction log. Once that phase is done (ie. we copied over all the index files), we start replaying the transaction log into to replica and then we do the switch.
+
+p. You can still index the data, you can still search, there is a very small period of time where things are blocking just to make the switch, but up until that time the relocation is completely transparent.

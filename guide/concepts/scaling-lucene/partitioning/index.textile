@@ -1,0 +1,48 @@
+---
+layout: concepts 
+title: Partitioning
+cat: concepts
+sidebar: scaling-lucene 
+---
+
+p. There are two basic approaches how to scale search engine using partitioning data into shards: *Document based partitioning* and *Term based partitioning*. Elasticsearch uses the Document based partitioning.
+
+h1. Document Based Partitioning
+
+p. Each document exists on a shard and each shard holds a subset of whole document set. Shard is a fully functional index.
+
+h2. Pros
+
+* Each shard can process queries independently.
+
+* It is very easy to add per document information.
+
+* It has very low network traffic. Every node do the search and can end up with just the doc IDs and scoring information, which is then merged on a node that does the distributed search and we are done.
+
+h2. Cons
+
+* The query has to be processed on all shards and it does O(K*N) disk seeks if K is the number of terms and N is the number of shards.
+
+p. From the practical point of view it has been proven that the document based partitioning is the way go when building a large-scale IR system, for more details see "this":http://videolectures.net/wsdm09_dean_cblirs/ talk by Jeffrey Dean (Google).
+
+h1. Term Based Partitioning
+
+p. Each shard has a subset of terms but for all documents in the index.
+
+p. Some of term based partitioned systems are for example Riak Search (built on top of Riak key-value store engine) or Lucandra/Solandra (on top of Cassandra). Although these systems are not all the same they do face similar challenges and also benefit from the similar concepts.
+
+h2. Pros
+
+* Usually, it is needed to query only a small number of shards. Say, we have five terms query, then we have to hit at most five shards, if all those five terms are stored on the same shard then we need to hit only a single shard even if we have fifty shard index.
+
+* Another benefit is that you only need to do O(K) disk seeks for K term query (assuming we use optimized implementation).
+
+h2. Cons
+
+* The main problem is that whole notion of Lucene Segment which is inherent to a lot of constructs in Lucene is lost.
+
+* For non-trivial queries the network traffic can be very high up to a point where it is not really usable. Especially for queries that expand to a lot of terms like fuzzy or prefix queries.
+
+* Another problem is that it is very hard to have per document information. For example if you want to have a piece of data to further control the scoring (think of Google PageRank) then it is very hard to associate those values per document because the data is partitioned in a different manner. So implementing faceting, sorting or custom scoring can be very hard up to impossible.
+
+*NEXT:* Once we know how to partition documents let's think about "replication":../replication as well.

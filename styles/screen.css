@@ -344,6 +344,28 @@ table td {
     width:  200px;
 }
 
+/* Conceptes */
+.concepts {
+    width: 940px;
+}
+
+.concepts .index {
+    width: 600px;
+    mergin-left: 200px;
+    list-style-type: upper-roman;
+}
+.concepts .index ol {
+    list-style-type: decimal;
+}
+
+.concepts .concepts_content {
+    width: 650px;
+}
+
+#concepts_sidebar {
+    float:  right;
+    width:  200px;
+}
 
 /* Blogposts & Tutorials */
 .blog {

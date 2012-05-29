@@ -1,0 +1,19 @@
+---
+layout: default
+---
+
+<div id="concepts_sidebar">
+    {% if page.sidebar == 'scaling-lucene'  %}
+        <h3><a href="/guide/">Guide</a></h3>
+        <h3><a href="/guide/concepts/scaling-lucene/">Scaling Lucene</a></h3>
+        <ul>
+            <li><a href="/guide/concepts/scaling-lucene/building-blocks/index.html">Building Blocks</a></li>
+            <li><a href="/guide/concepts/scaling-lucene/partitioning/index.html">Partitioning</a></li>
+            <li><a href="/guide/concepts/scaling-lucene/replication/index.html">Replication</a></li>
+            <li><a href="/guide/concepts/scaling-lucene/transaction-log/index.html">Transaction Log</a></li>
+        </ul>
+    {% endif %}
+</div>
+<div class="concepts_content">
+    {{ content }}
+</div>

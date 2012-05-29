@@ -1,0 +1,44 @@
+---
+layout: concepts 
+title: Replication 
+cat: concepts
+sidebar: scaling-lucene 
+---
+
+Another aspect of distribted system is replication. We usually implement replication to get two main benefits:
+
+* *High Availability* (HA). If one node fails the other node can pick up from where that node failed. If one node is holding index shard and another node is holding replica then we have a backup of the data.
+
+* Another benefit is *scalability* by having more replicas of the data. There is no reason to not allow replicas to serve search so just by adding a slave nodes or replicas we can increase our search throughput.
+
+p. There are two common approaches to implement replication: *Push Replication* and *Pull Replication*. Elasticsearch uses Push Replication.
+
+h1. Push Replication
+
+p. It works quite simply, you index a document into a [master] shard and that shard will replicate this document into all the other [replica] shards and those other shards will index this document as well.
+
+h2. Cons
+
+* You index the same document several times, but we transfer much less data compared to Pull replication (and Lucene is known to index very fast).
+
+* There needs to be very delicate control of concurrent indexing. For example take a heavy update rate of the same document, you need to make sure that updates are applied in correct order or using versionig to reject older versions when you try to perform the operation between the primary shard and the replica shards. There is no such a problem with pull replication.
+
+h2. Pros
+
+* Once the document is indexed it is immediately available on all replicas. The indexing of the document will wait for all the replicas to acknowledge the fact that they have indexed the document as well (note: async replication can be used as well if needed). It means we have a real time availability. And we just need to refresh the IndexReader to be able to search the new data.
+
+* Such architecture allows for very easy role switching between nodes. If the node with primary shard dies we can do a quick switch because primary and replicas are on the same page.
+
+h1. Pull Replication
+
+p. Pull Replication is a master - slave configuration (Solr for example uses it). When document is indexed into the master and the data is committed a new segment files are created and then the slaves can pull those new segments into their machines and refresh whatever is needed in Lucene (like the IndexReader) and then they can serve the search requests with the new data.
+
+h2. Cons
+
+* It requires a commit on the master to make those segments visible so the slaves can pull them. If you remember the commit can be very expensive operation in Lucene and you want to do as little commits as you can.
+
+* It has redundant data transfer. Network is usually the most rare resource in distributed systems (if you are running on EC2 it is even more rarer) and you end up moving more data then you would have wanted to. For example if you have two segments with documents with stored fields, and Lucene decides to merge those two segments then you have to transfer this data to the slave because it is a new segment but you are transferring almost the same amount of data again to the slave.
+
+It can lead to a situations where the slaves are really behind the master. The reason can be that it does not make sense to commit every time or a large segment is being transfered and it takes some time. This means that you are losing the high availability notion of the slave and can not really treat it as a real time high available slave. This will not work for real time search and there is no way how you can get to something like 1 second refresh rate visibility in Lucene using pull replication.
+
+*NEXT:* We are still missing one very important concept that provides full document persistency. Let's meet "transaction log":../transaction-log.
