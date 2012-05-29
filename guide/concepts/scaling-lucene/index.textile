@@ -9,6 +9,6 @@ p. 怎样在Lucene之上构建一个分布式、高度伸缩、接近实时的�
 
 p. 让我们回顾一下在搜索引擎（基于lucene）伸缩性这条路上都做了那些尝试，并且elasticsearch是如何尝试并去解决这些挑战的.
 
-p. 首先我们了解下最基础的理论知识 "building blocks":这些理论基础是构建分布式近实时搜索引擎的基础。接着我们研究一下到底哪种才是最佳的分区策略 "partitioning":将lucene索引文档分割到多个分布式的分片中去。然后我们同样需要决定使用哪种分区复制方式 "replication":复制能够保证系统的高可用以及提高搜索的吞吐. 最后，我们再看一下事务日志 "transaction log":事务日志在elasticsearch里面是一个保证数据一致性的非常酷的功能.
+p. 首先我们了解下最基础的理论知识  "building blocks":这些理论基础是构建分布式近实时搜索引擎的基础. 接着我们研究一下到底哪种才是最佳的分区策略 "partitioning":将lucene索引文档分割到多个分布式的分片中去。然后我们同样需要决定使用哪种分区复制方式 "replication":复制能够保证系统的高可用以及提高搜索的吞吐. 最后，我们再看一下事务日志 "transaction log":事务日志在elasticsearch里面是一个保证数据一致性的非常酷的功能.
 
 p. 相关的视频和幻灯片都可以在这里找到: "Road to a Distributed Search Engine":../../../videos/2011/08/09/road-to-a-distributed-searchengine-berlinbuzzwords.html
