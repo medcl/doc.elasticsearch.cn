@@ -5,44 +5,45 @@ cat: concepts
 sidebar: scaling-lucene 
 ---
 
-p. There are two basic approaches how to scale search engine using partitioning data into shards: *Document based partitioning* and *Term based partitioning*. Elasticsearch uses the Document based partitioning.
+p. 有2种通过将数据分区方式来scale搜索引擎: *基于文档（Document based partitioning）* and *基于词条（Term based partitioning）*. Elasticsearch 使用的基于文档的分区方式.
 
-h1. Document Based Partitioning
+h1. 基于文档的分区（Document Based Partitioning）
 
-p. Each document exists on a shard and each shard holds a subset of whole document set. Shard is a fully functional index.
+p. 每一个文档只存一个分区，每个分区持有整个文档集的一个子集，分区是一个功能完整的索引.
 
-h2. Pros
+h2. 优点
 
-* Each shard can process queries independently.
+* 每个分区都可以独立的处理查询.
 
-* It is very easy to add per document information.
+* 可以非常简单的添加以文档为单位的索引信息.
 
-* It has very low network traffic. Every node do the search and can end up with just the doc IDs and scoring information, which is then merged on a node that does the distributed search and we are done.
+* 网络开销很小，每个节点可以分别执行搜索，执行完了之后只需用返回文档的ID和评分信息就可以了，然后在其中一个我们执行分布式搜索的节点上执行合并就可以了.
 
-h2. Cons
+h2. 缺点
 
-* The query has to be processed on all shards and it does O(K*N) disk seeks if K is the number of terms and N is the number of shards.
+* 查询如果需要在所有的分区上执行，那么它将执行 O(K*N) 次磁盘操作（K是词条（Term，或者理解为Field）的数量，N是分区的数量）.
 
-p. From the practical point of view it has been proven that the document based partitioning is the way go when building a large-scale IR system, for more details see "this":http://videolectures.net/wsdm09_dean_cblirs/ talk by Jeffrey Dean (Google).
+p. 在实用性的角度来看基于文档的分区方式已经被证明是一个构建大型的分布式信息检索系统的一种行之有效的方法, 关于这方面的详细内容，可以看 "这里":http://videolectures.net/wsdm09_dean_cblirs/ talk by Jeffrey Dean (Google).
 
-h1. Term Based Partitioning
+h1. 基于词条的分区（Term Based Partitioning）
 
-p. Each shard has a subset of terms but for all documents in the index.
+p. 每个分区拥有一部分词条，词条里面包含了整个index的文档数据.
 
-p. Some of term based partitioned systems are for example Riak Search (built on top of Riak key-value store engine) or Lucandra/Solandra (on top of Cassandra). Although these systems are not all the same they do face similar challenges and also benefit from the similar concepts.
+p. 一些基于词条分区的系统，如Riak Search (built on top of Riak key-value store engine) 或是 Lucandra/Solandra (on top of Cassandra). 尽管这些系统不是完全一样，但是它们都面临一个相似的挑战，当然也得益于相同的设计理念.
 
-h2. Pros
+h2. 优点
 
-* Usually, it is needed to query only a small number of shards. Say, we have five terms query, then we have to hit at most five shards, if all those five terms are stored on the same shard then we need to hit only a single shard even if we have fifty shard index.
+* 一般来说，你只需要在很少的部分分区上执行查询就行了，比如，我们有5个term词条的查询，我们将至多命中5个分区，如果这5个term词条都保存同一个分区中，那么我们只需用访问一个分区即可，而不管我们是不是实际上有50个分区.
 
-* Another benefit is that you only need to do O(K) disk seeks for K term query (assuming we use optimized implementation).
+* 另外一个优势就是对应K个Term词条的查询，你只需用执行 O(K) 次磁盘查找（假设我们使用的优化过的实现）.
 
-h2. Cons
+h2. 缺点
 
-* The main problem is that whole notion of Lucene Segment which is inherent to a lot of constructs in Lucene is lost.
+* 最主要的问题是Lucene Segment概念里面固有的很多结构都将失去。
+The main problem is that whole notion of Lucene Segment which is inherent to a lot of constructs in Lucene is lost.
 
-* For non-trivial queries the network traffic can be very high up to a point where it is not really usable. Especially for queries that expand to a lot of terms like fuzzy or prefix queries.
+* 对于那些复杂的查询，网络开销将会变得非常高，并且可能使得系统可用性大大降低，尤其是那些会expand出大量的term词条的查询，如fuzzy或者prefix查询.
 
-* Another problem is that it is very hard to have per document information. For example if you want to have a piece of data to further control the scoring (think of Google PageRank) then it is very hard to associate those values per document because the data is partitioned in a different manner. So implementing faceting, sorting or custom scoring can be very hard up to impossible.
+* 另外一个问题就是获取每个文档的信息将会变得非常困难，举例来说，如果你想获取文档的一部分数据来做进一步的控制，比如（google的PageRank算法），获取每个文档的这些数据都会变得非常困难，因为这种分区的方式使得文档的数据被分散到了不同的地方，所以实现faceting、评分、自定义评分等等都将变得难以实现.
 
-*NEXT:* Once we know how to partition documents let's think about "replication":../replication as well.
+*NEXT:* 一旦我们知道了如何对文档进行分区，同样让我们再看看 "replication":../replication .

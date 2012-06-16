@@ -6,7 +6,7 @@ cat_link: guide
 sidebar: reference_api
 ---
 
-p. count API 能够很轻松的获取查询结果的总数. 支持一个或多个索引，或者一个或多个索引类型. 可以通过简单的URL参数的方式，或者使用"Query DSL":/guide/reference/query-dsl ，下面是示例:
+p. count API 能够很轻松的获取查询结果的总数. 支持一个或多个索引，或者一个或多个索引类型. 可以通过简单的URL参数的方式，或者使用"Query DSL":/guide/reference/query-dsl  ，下面是示例:
 
 <pre class="prettyprint">
 $ curl -XGET 'http://localhost:9200/twitter/tweet/_count?q=user:kimchy'
