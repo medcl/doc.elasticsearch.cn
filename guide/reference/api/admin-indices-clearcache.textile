@@ -1,23 +1,24 @@
 ---
 layout: guide
-title: Clear Cache API
-cat: guide
+title: 缓存清理 API
+cat: 向导
+cat_link: guide
 sidebar: reference_api
 ---
 
-p. The clear cache API allows to clear either all caches or specific cached associated with one ore more indices.
+p. 缓存清理API允许清除全部缓存或者清除跟特定的一个或多个索引关联的缓存。
 
 <pre class="prettyprint">
 $ curl -XPOST 'http://localhost:9200/twitter/_cache/clear'
 </pre>
 
-p. The API, by default, will clear all cached. Specific caches can cleaned explicitly by setting @filter@, @field_data@ or @bloom@ to @true@.
+p. 此API在默认情况下会清除所有缓存。通过显示的设置 @filter@ ， @field_data@ 或者 @bloom@ 为 @true@ 可以清除特定缓存。
 
-p. All caches relating to a specific field(s) can also be cleared by specifying @fields@ parameter with a comma delimited list of the relevant fields.
+p. 通过给 @fields@ 指定带有用逗号作为分隔符参数，也可以使所有和特定域关联的缓存被清除
 
-h1. Multi Index
+h1. 多重索引
 
-p. The flush API can be applied to more than one index with a single call, or even on @_all@ the indices.
+p. 此API可以在一次请求中应用到多个索引上面，甚至通过 @_all@ 应用到所有的索引上。
 
 <pre class="prettyprint">
 $ curl -XPOST 'http://localhost:9200/kimchy,elasticsearch/_cache/clear'
