@@ -42,7 +42,7 @@ $ curl -XPUT 'http://localhost:9200/twitter/' -d '{
 }'
 </pre>
 
-_请注意，你不需要在 @settings@ 项中显示的指定 @index@。_
+_请注意，你不需要在 @settings@ 项中显示的指定 @index@ 。_
 
 h1. 映射
 
