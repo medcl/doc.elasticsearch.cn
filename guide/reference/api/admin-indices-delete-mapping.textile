@@ -6,9 +6,7 @@ cat_link: guide
 sidebar: reference_api
 ---
 
-p. Allow to delete a mapping (type) along with its data. The REST endpoint is @/{index}/{type}@ with @DELETE@ method.
-    允许删除一个映射项（类型）及其数据。REST格式的端点为 @/{index}/{type}@ ，并且使用 @DELETE@ 方法。
+p. 允许删除一个映射项（类型）及其数据。REST格式的端点为 @/{index}/{type}@ ，并且使用 @DELETE@ 方法。
 
-p. Note, most times, it make more sense to reindex the data into a fresh index compared to delete large chunks of it.
-    注意，大多数时候，重新索引这些数据到一个新的索引中要比删除他们更好。
+p. 注意，大多数时候，重新索引这些数据到一个新的索引中要比删除他们更好。
 
