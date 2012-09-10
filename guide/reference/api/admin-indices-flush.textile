@@ -1,26 +1,34 @@
 ---
 layout: guide
-title: Flush API
-cat: guide
+title: 提交API
+cat: 向导
+cat_link: guide
 sidebar: reference_api
 ---
 
 p. The flush API allows to flush one or more indices through an API. The flush process of an index basically frees memory from the index by flushing data to the index storage and clearing the internal transaction log. By default, ElasticSearch uses memory heuristics in order to automatically trigger flush operations as required in order to clear memory.
+    提交API允许通过一个API请求提交一个或多个索引。提交一个索引基本上就是释放索引所占用的内存，并且将数据提交到索引存储区中，然后清除内部的事务日至。默认情况下，ElasticSearch使用内存启发式模式用以在需要的时候自动出发提交操作来清理内存。
 
 <pre class="prettyprint">
 $ curl -XPOST 'http://localhost:9200/twitter/_flush'
 </pre>
 
 h1. Request Parameters
+    请求参数
 
 p. The flush API accepts the following request parameters:
+    提交API接收以下请求参数：
 
 |_. Name |_. Description |
+|_. 参数名 |_. 描述 |
 | @refresh@ | Should a refresh be performed after the flush. Defaults to @false@. |
+| @refresh@ | 在提交之后是否需要执行一个刷新操作。默认值为 @false@ 。 |
 
 h1. Multi Index
+    多重索引
 
 p. The flush API can be applied to more than one index with a single call, or even on @_all@ the indices.
+    提交API通过一个请求应用到多个索引上，甚至是 @_all@ 索引。
 
 <pre class="prettyprint">
 $ curl -XPOST 'http://localhost:9200/kimchy,elasticsearch/_flush'
