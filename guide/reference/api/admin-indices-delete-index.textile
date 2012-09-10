@@ -6,15 +6,12 @@ cat_link: guide
 sidebar: reference_api
 ---
 
-p. The delete index API allows to delete an existing index.
-    索引删除API允许删除一个已经存在的索引。
+p. 索引删除API允许删除一个已经存在的索引。
 
 <pre class="prettyprint">
 $ curl -XDELETE 'http://localhost:9200/twitter/'
 </pre>
 
-p. The above example deletes an index called @twitter@.
-    上面的例子删除了一个名字叫做 @twitter@ 的索引。
+p. 上面的例子删除了一个名字叫做 @twitter@ 的索引。
 
-p. The delete index API can also be applied to more than one index, or on @_all@ indices (be careful!). All indices will also be deleted when no specific index is provided. In order to disable allowing to delete all indices, set @action.disable_delete_all_indices@ setting in the config to @true@.
-    索引删除API也可以被应用于多个索引，或者 @_all@ 索引（请小心使用）。在没有指定索引的情况下，所有的索引都将被删除。为了不允许删除所有的索引，可以在配置文件中将 @action.disable_delete_all_indices@ 设置为 @true@.
+p. 索引删除API也可以被应用于多个索引，或者 @_all@ 索引（请小心使用）。在没有指定索引的情况下，所有的索引都将被删除。为了不允许删除所有的索引，可以在配置文件中将 @action.disable_delete_all_indices@ 设置为 @true@.
