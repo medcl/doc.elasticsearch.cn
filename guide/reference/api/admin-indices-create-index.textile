@@ -1,11 +1,12 @@
 ---
 layout: guide
-title: Create Index API
+title: 索引创建 API
 cat: guide
 sidebar: reference_api
 ---
 
 p. The create index API allows to instantiate an index. ElasticSearch provides support for multiple indices, including executing operations across several indices. Each index created can have specific settings associated with it.
+    索引创建API允许初始化一个索引。 ElasticSearch对多重索引提供了支持，包括跨多个索引执行操作。每个索引在创建时可以让一个特定的设置项与其关联。
 
 <pre class="prettyprint">
 $ curl -XPUT 'http://localhost:9200/twitter/'
@@ -18,6 +19,7 @@ index :
 </pre>
 
 p. The above second example curl shows how an index called @twitter@ can be created with specific settings for it using "YAML":http://www.yaml.org. In this case, creating an index with 3 shards, each with 2 replicas. The index settings can also defined with "JSON":http://www.json.org:
+    上面第二个curl例子展示了如何创建一个名字叫 @twitter@ 的索引，并且使用 "YAML":http://www.yaml.org 格式为其指定设置项。在这个例子中，我们为该索引配置了三个切片和两个副本。索引设置项也可以通过 "JSON":http://www.json.org 格式指定：
 
 <pre class="prettyprint">
 $ curl -XPUT 'http://localhost:9200/twitter/' -d '{
@@ -31,6 +33,7 @@ $ curl -XPUT 'http://localhost:9200/twitter/' -d '{
 </pre>
 
 or more simplified
+或者简化为
 
 <pre class="prettyprint">
 $ curl -XPUT 'http://localhost:9200/twitter/' -d '{
@@ -42,10 +45,13 @@ $ curl -XPUT 'http://localhost:9200/twitter/' -d '{
 </pre>
 
 _Note you do not have to explicitly specify @index@ section inside @settings@ section._
+_请注意，你不需要在 @settings@ 项中显示的指定 @index@。_
 
 h1. Mappings
+    映射
 
 p. The create index API allows to provide a set of one or more mappings:
+    索引创建API可以接收一个或一组映射选项：
 
 <pre class="prettyprint">
 curl -XPOST localhost:9200/test -d '{
@@ -64,5 +70,7 @@ curl -XPOST localhost:9200/test -d '{
 </pre>
 
 h1. Index Settings
+    索引设置
 
 p. For more information regarding all the different index level settings that can be set when creating an index, please check the "index modules":/guide/reference/index-modules section.
+    想要关注更多不同的，可以在索引创建时设置的索引级选项，请看 "index modules":/guide/reference/index-modules 。
