@@ -1,11 +1,12 @@
 ---
 layout: guide
-title: Get Settings API
-cat: guide
+title: 获取设置 API
+cat: 向导
+cat_link: guide
 sidebar: reference_api
 ---
 
-p. The get settings API allows to retrieve settings of index/indices:
+p. 此API允许获取索引的设置项信息。
 
 <pre class="prettyprint">
 $ curl -XGET 'http://localhost:9200/twitter/_settings'
