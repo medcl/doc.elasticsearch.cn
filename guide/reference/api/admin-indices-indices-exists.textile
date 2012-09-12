@@ -1,14 +1,15 @@
 ---
 layout: guide
-title: Indices Exists API
-cat: guide
+title: 索引存在性测试 API
+cat: 向导
+cat_link: guide
 sidebar: reference_api
 ---
 
-p. Used to check if the index (indices) exists or not. For example:
+p. 用于确认索引是否存在，举例如下：
 
 <pre class="prettyprint">
 curl -XHEAD 'http://localhost:9200/twitter'
 </pre>
 
-p. The HTTP status code indicates if it exists or not. A @404@ means its not found, and @200@ means its there.
+p. HTTP状态码可以指出索引是否存在。 @404@ 表示不存， @200@ 表示存在。
