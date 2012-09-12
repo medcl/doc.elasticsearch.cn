@@ -1,13 +1,15 @@
 ---
 layout: guide
-title: Open / Close Index API
-cat: guide
+title: 打开／关闭索引 API
+cat: 向导
+cat_link: guide
 sidebar: reference_api
 ---
 
 p. The open and close index APIs allow to close an index, and later on opening it. A closed index has almost no overhead on the cluster (except for maintaining its metadata), and is blocked for read/write operations. A closed index can be opened which will then go through the normal recovery process.
+    打开／关闭索引API允许关闭一个索引，可以在后来再打开它。一个已经关闭的索引几乎不会在集群中更新（除非修改了索引的元数据信息），并且不能被读写。一个已经关闭的索引可以被打开然后进入正常的索引恢复流程。
 
-p. The REST endpoint is @/{index}/_close@ and @/{index}/_open@. For example:
+p. REST的端点格式为 @/{index}/_close@ 和 @/{index}/_open@ 。举例如下：
 
 <pre class="prettyprint">
 curl -XPOST 'localhost:9200/my_index/_close'
