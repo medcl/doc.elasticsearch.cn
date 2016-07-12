@@ -1,17 +1,21 @@
 ---
 layout: guide
-title: All Field
+title: All字段
 cat: guide
 sidebar: reference_mapping
 ---
 
-p. The idea of the @_all@ field is that it includes the text of one or more other fields within the document indexed. It can come very handy especially for search requests, where we want to execute a search query against the content of a document, without knowing which fields to search on. This comes at the expense of CPU cycles and index size.
 
-p. The @_all@ fields can be completely disabled. Explicit field mapping and object mapping can be excluded / included in the @_all@ field. By default, it is enabled and all fields are included in it for ease of use.
+p. @_all@ 字段用于映射索引文档中一个或多个字段包含的内容。在不知道该搜索字段的时候，只需要字段内容便能完成对文档的搜索，这方便了我们的搜索请求。其代价是cpu轮询和索引大小的开销。
 
-p. One of the nice features of the @_all@ field is that it takes into account specific fields boost levels. Meaning that if a title field is boosted more than content, the title (part) in the @_all@ field will mean more than the content (part) in the @_all@ field.
 
-p. Here is a sample mapping:
+p. @_all@ 字段可以被完全禁用。理想的字段映射和对象映射可以排除／包含在_all字段中。默认配置是，@_all@ 字段是可用的且所有字段都被包含在内（为了方便使用）
+
+
+p.  @_all@ 字段的一个很好的特性是它支持特定字段的等级标榜。这意味着如果一个title字段标榜的比内容更多，@_all@ 字段的title部分将也会比 @_all@ 字段中的内容部分标榜的更多。
+
+p. 下面是一个映射例子：
+
 
 <pre class="prettyprint lang-js">
 {
@@ -49,11 +53,13 @@ p. Here is a sample mapping:
 }
 </pre>
 
-p. The @_all@ fields allows for @store@, @term_vector@ and @analyzer@ (with specific @index_analyzer@ and @search_analyzer@) to be set.
 
-h2. Highlighting
+p. _all字段允许设置@store@, @term_vector@ 和 @analyzer@ （带有特定的 @index_analyzer@ 和 @search_analyzer@） 
 
-For any field to allow "highlighting":../api/search/highlighting.html it has to be either stored or part of the @_source@ field. By default @_all@ field does not qualify for either, so highlighting for it does not yield any data.
+h2. 高亮
 
-Although it is possible to @store@ the @_all@ field, it is basically an aggregation of all fields, which means more data will be stored, and highlighting it might produce strange results.
+
+对于允许"高亮":../api/search/highlighting.html 的字段,他要么被存储要么成为_source字段的一部分。默认情况下，@_all@  字段并不会做任何修饰， 所以其高亮并不产生任何数据。
+
+尽管 @store@ @_all@ 字段是可能的，但是它是所有字段的一个聚合，这表示更多的数据会被存储，并高亮其生成的奇怪的结果。
 
