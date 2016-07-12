@@ -34,9 +34,7 @@ p. 以上表示将会使用 @my_field@ 的值去查询一个在其后注册的�
 
 p. 将会导致 @whitespace@ 分析器被用于索引分析器，该索引分析器可以是没有明确设置分析器的所有字段
 
-p. The default path value is @_analyzer@, so the analyzer can be driven for a specific document by setting @_analyzer@ field in it. If custom json field name is needed, an explicit mapping with a different path should be set.
-
 p. 默认的路径值是 @_analyzer@ ，所以分析器可以被特定的文档通过设置期内的 @_analyzer@ 字段 来调取。如果需要定制的json字段名， 则应当设置一个不明确的不同路径的映射
 
-p. By default, the @_analyzer@ field is indexed, it can be disabled by settings @index@ to @no@ in the mapping.
+
 p. 默认情况下， @_analyzer@ 字段是被索引的， 这可以通过在映射中设置 @index@ 为 @no@ 来禁用
