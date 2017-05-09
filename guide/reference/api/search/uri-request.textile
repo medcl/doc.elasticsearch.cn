@@ -4,8 +4,12 @@ title: Search API - URI Request
 cat: guide
 sidebar: reference_api_search
 ---
+**request parameters**
+--重要的概念--
 
 p. A search request can be executed purely using a URI by providing request parameters. Not all search options are exposed when executing a search using this mode, but it can be handy for quick "curl tests". Here is an example:
+
+p. 不是所有搜索选项都暴露，但是方便 curl test
 
 <pre class="prettyprint">
 $ curl -XGET 'http://localhost:9200/twitter/tweet/_search?q=user:kimchy'
@@ -57,5 +61,5 @@ p. The parameters allowed in the URI are:
 |size| The number of hits to return. Defaults to @10@. |
 |search_type| The type of the search operation to perform. Can be @dfs_query_then_fetch@, @dfs_query_and_fetch@, @query_then_fetch@, @query_and_fetch@. Defaults to @query_then_fetch@. |
 |lowercase_expanded_terms|Should terms be automatically lowercased or not. Defaults to @true@.|
-|analyze_wildcard|Should wildcard and prefix queries be analyzed or not. Defaults to @false@.|
+|analyze_wildcard|Should wildcard and prefix queries be analyzed or not. Defaults to @false@. 通配符&前缀|
 

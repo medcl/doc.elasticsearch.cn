@@ -4,8 +4,10 @@ title: Search API - Indices And Types
 cat: guide
 sidebar: reference_api_search
 ---
+索引和类型
 
 p. The search API can be applied to multiple types within an index, and across multiple indices. For example, we can search on all documents across all types within the twitter index:
+
 
 <pre class="prettyprint">
 $ curl -XGET 'http://localhost:9200/twitter/_search?q=user:kimchy'
@@ -16,6 +18,7 @@ p. We can also search within specific types:
 <pre class="prettyprint">
 $ curl -XGET 'http://localhost:9200/twitter/tweet,user/_search?q=user:kimchy'
 </pre>
+针对tweet,user 两类型搜索
 
 p. We can also search all tweets with a certain tag across several indices (for example, when each user has his own index):
 
